@@ -26,7 +26,7 @@
 
   function template() {
     return `
-      <a class="af-nav-mark" href="/">ALETHEIA</a>
+      <a class="af-nav-mark" href="/">ALYTHIA</a>
       <div class="af-nav-menu">
         <a class="af-nav-link" href="/subscription.html" data-i18n="nav.product">Product &amp; Services</a>
         <div class="af-nav-dd">
