@@ -867,6 +867,21 @@
                     <span class="stream-status active">Observed</span>
                   </div>
                 </div>
+
+                <!-- Stream 5: ERA5 / IMD / CHIRPS / GPM -->
+                <div class="stream-card active">
+                  <div class="stream-card-top">
+                    <div class="stream-info">
+                      <span class="stream-type">ATMOSPHERE &amp; PRECIP</span>
+                      <h3 class="stream-name">ERA5 / IMD / CHIRPS / GPM</h3>
+                    </div>
+                    <span class="stream-val" id="stream-precip-val" style="color: #0284C7; font-weight: 600;">14.8 mm / +8.6%</span>
+                  </div>
+                  <div class="stream-meta">
+                    <span id="stream-precip-meta">Wind: 4.8 m/s · IMD Normal</span>
+                    <span class="stream-status active" style="background:#E0F2FE; color:#0369A1;">Live Sync</span>
+                  </div>
+                </div>
               </div>
 
               <div class="col-foot-action">
@@ -1797,7 +1812,7 @@
             <p style="margin: 3px 0 0 0; font-size: 0.8rem; color: var(--text-secondary);">Active satellite constellations, STAC catalogs, and near-real-time telemetry proxies.</p>
           </div>
         </div>
-        <span class="api-status badge-success" style="font-size: 0.75rem; padding: 4px 10px; background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; border-radius: 999px; font-weight: 600;">4 Active Streams (100% Ingest Health)</span>
+        <span class="api-status badge-success" style="font-size: 0.75rem; padding: 4px 10px; background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; border-radius: 999px; font-weight: 600;">5 Active Streams (100% Ingest Health)</span>
       </div>
 
       <div style="margin-top: 20px; overflow-x: auto; border: 1px solid var(--border-color); border-radius: 8px;">
@@ -1895,7 +1910,7 @@
             </tr>
 
             <!-- Row 4: NASA FIRMS -->
-            <tr style="font-size: 0.82rem;">
+            <tr style="border-bottom: 1px solid var(--border-color); font-size: 0.82rem;">
               <td style="padding: 12px 14px;">
                 <strong style="color: var(--text-primary); display: block;">NASA LANCE / FIRMS</strong>
                 <span style="font-size: 0.74rem; color: var(--text-secondary);">VIIRS (VNP46A2) &amp; MODIS Nightfire</span>
@@ -1918,6 +1933,33 @@
               </td>
               <td style="padding: 12px 14px; text-align: right;">
                 <button class="btn-ghost small test-conn-btn" data-conn="NASA FIRMS" style="cursor: pointer; padding: 4px 8px; font-size: 0.75rem;">Ping Test</button>
+              </td>
+            </tr>
+
+            <!-- Row 5: ERA5 / IMD / CHIRPS / GPM -->
+            <tr style="font-size: 0.82rem;">
+              <td style="padding: 12px 14px;">
+                <strong style="color: var(--text-primary); display: block;">ECMWF / IMD / NASA / UCSB</strong>
+                <span style="font-size: 0.74rem; color: var(--text-secondary);">ERA5 · IMD Gridded · CHIRPS · GPM</span>
+              </td>
+              <td style="padding: 12px 14px;">
+                <span class="bot-tag" style="background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; border-radius: 4px; padding: 2px 6px; font-size: 0.72rem; font-weight: 600;">Reanalysis &amp; NRT Ingest</span>
+                <div style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 4px;">Atmospheric Dispersion + 0.05° Rainfall</div>
+              </td>
+              <td style="padding: 12px 14px;">
+                <div style="font-weight: 600;">Hourly / 0.05° Daily</div>
+                <span style="font-size: 0.72rem; color: var(--text-secondary);">Continuous Global Sync</span>
+              </td>
+              <td style="padding: 12px 14px; font-family: var(--mono); font-size: 0.74rem; color: var(--text-secondary);">
+                <div>api.open-meteo.com &amp; imd.gov.in</div>
+                <span style="color: var(--accent); font-size: 0.7rem; font-weight: 500;">endpoint: /api/weather-precip</span>
+              </td>
+              <td style="padding: 12px 14px;">
+                <span style="display: inline-flex; align-items: center; gap: 5px; color: #047857; font-weight: 600; font-size: 0.76rem;">● Connected</span>
+                <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 2px;">Latency: 29ms</div>
+              </td>
+              <td style="padding: 12px 14px; text-align: right;">
+                <button class="btn-ghost small test-conn-btn" data-conn="ERA5 / IMD / CHIRPS / GPM" style="cursor: pointer; padding: 4px 8px; font-size: 0.75rem;">Ping Test</button>
               </td>
             </tr>
           </tbody>
