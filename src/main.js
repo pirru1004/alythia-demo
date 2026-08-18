@@ -97,12 +97,13 @@ function routeFromHash() {
   const h = (location.hash || '').replace('#', '').toLowerCase();
   if (h === 'overview') navigateTo('view-overview');
   else if (h === 'team') navigateTo('view-team');
+  else if (h === 'divergence') navigateTo('view-divergence');
+  else if (h === 'pillars') navigateTo('view-pillars');
   else if (h === '' || h === 'home') navigateTo('view-home');
 }
 window.addEventListener('hashchange', routeFromHash);
-// On initial load only route when the hash targets a public sub-view (e.g. a deep
-// link from subscription.html) — otherwise leave the default view / auth logic be.
-if (['#overview', '#team'].includes((location.hash || '').toLowerCase())) routeFromHash();
+// On initial load only route when the hash targets a sub-view
+if (['#overview', '#team', '#divergence', '#pillars'].includes((location.hash || '').toLowerCase())) routeFromHash();
 
 document.querySelectorAll('.btn-back-dashboard').forEach(btn => {
   btn.addEventListener('click', () => navigateTo('view-pillars'));
