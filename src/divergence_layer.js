@@ -378,6 +378,58 @@ export function initDivergenceLayer() {
     }, 800);
   });
 
+  // Data Connections Modal
+  const openConnBtn = document.getElementById('btn-open-connections-settings');
+  const closeConnBtn = document.getElementById('btn-close-connections-modal');
+  const closeConnFooterBtn = document.getElementById('btn-close-connections-modal-footer');
+  const connModal = document.getElementById('divergence-connections-modal');
+
+  const openModal = () => {
+    if (connModal) {
+      connModal.classList.remove('hidden');
+      connModal.style.display = 'flex';
+    }
+  };
+
+  const closeModal = () => {
+    if (connModal) {
+      connModal.classList.add('hidden');
+      connModal.style.display = 'none';
+    }
+  };
+
+  openConnBtn?.addEventListener('click', openModal);
+  closeConnBtn?.addEventListener('click', closeModal);
+  closeConnFooterBtn?.addEventListener('click', closeModal);
+
+  // Close when clicking modal backdrop
+  connModal?.addEventListener('click', (e) => {
+    if (e.target === connModal) closeModal();
+  });
+
+  // Ping test buttons
+  document.querySelectorAll('.test-conn-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const connName = btn.dataset.conn || 'Connection';
+      const origText = btn.textContent;
+      btn.textContent = 'Pinging...';
+      btn.disabled = true;
+      btn.style.color = 'var(--ink-2)';
+
+      setTimeout(() => {
+        btn.textContent = '✓ 200 OK';
+        btn.style.color = '#047857';
+        btn.style.borderColor = '#A7F3D0';
+        setTimeout(() => {
+          btn.textContent = origText;
+          btn.disabled = false;
+          btn.style.color = '';
+          btn.style.borderColor = '';
+        }, 2000);
+      }, 450);
+    });
+  });
+
   // Export action
   exportBtn?.addEventListener('click', () => {
     alert('Divergence Dossier with Planet 3m Satellite capture exported successfully to PDF.');
@@ -387,3 +439,4 @@ export function initDivergenceLayer() {
     alert('Divergence Layer synchronized with PlanetScope API feed.');
   });
 }
+

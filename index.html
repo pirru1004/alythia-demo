@@ -788,6 +788,7 @@
                   <span class="status-indicator online"></span>
                   <span class="sync-text">Planet Feed Active</span>
                 </div>
+                <button class="primary-btn outline small" id="btn-open-connections-settings">⚙️ Data Connections</button>
                 <button class="primary-btn outline small" id="btn-recalibrate-divergence">Recalibrate Sensors</button>
               </div>
             </div>
@@ -1782,6 +1783,155 @@
   </button>
 
 
+
+  <!-- Special Sensor & STAC Data Connections Modal (Demo) -->
+  <div id="divergence-connections-modal" class="profile-modal hidden" style="position: fixed; inset: 0; background: rgba(10, 15, 25, 0.7); backdrop-filter: blur(6px); z-index: 100000; display: flex; align-items: center; justify-content: center;">
+    <div class="profile-modal-content" style="max-width: 880px; padding: 28px; width: 92vw; background: var(--surface); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: var(--shadow-xl); position: relative; max-height: 90vh; overflow-y: auto;">
+      <button class="close-profile-btn" id="btn-close-connections-modal" style="position: absolute; top: 18px; right: 18px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-secondary);">&times;</button>
+      
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; padding-right: 30px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 1.6rem;">🛰️</span>
+          <div>
+            <h2 style="margin: 0; font-size: 1.35rem; font-family: var(--serif); color: var(--text-primary);">Active Orbital &amp; STAC Data Connections</h2>
+            <p style="margin: 3px 0 0 0; font-size: 0.8rem; color: var(--text-secondary);">Active satellite constellations, STAC catalogs, and near-real-time telemetry proxies.</p>
+          </div>
+        </div>
+        <span class="api-status badge-success" style="font-size: 0.75rem; padding: 4px 10px; background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; border-radius: 999px; font-weight: 600;">4 Active Streams (100% Ingest Health)</span>
+      </div>
+
+      <div style="margin-top: 20px; overflow-x: auto; border: 1px solid var(--border-color); border-radius: 8px;">
+        <table class="admin-table connections-table" style="width: 100%; border-collapse: collapse; text-align: left;">
+          <thead>
+            <tr style="background: var(--surface-subtle); border-bottom: 2px solid var(--border-color); font-size: 0.74rem; font-family: var(--mono); color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">
+              <th style="padding: 10px 14px;">Provider &amp; Constellation</th>
+              <th style="padding: 10px 14px;">Sensor Protocol &amp; Type</th>
+              <th style="padding: 10px 14px;">Resolution / Cadence</th>
+              <th style="padding: 10px 14px;">STAC / Ingest Endpoint</th>
+              <th style="padding: 10px 14px;">Status</th>
+              <th style="padding: 10px 14px; text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Row 1: Copernicus S1 & S2 -->
+            <tr style="border-bottom: 1px solid var(--border-color); font-size: 0.82rem;">
+              <td style="padding: 12px 14px;">
+                <strong style="color: var(--text-primary); display: block;">Copernicus Data Space (ESA)</strong>
+                <span style="font-size: 0.74rem; color: var(--text-secondary);">Sentinel-1 (SAR) &amp; Sentinel-2 (MSI)</span>
+              </td>
+              <td style="padding: 12px 14px;">
+                <span class="bot-tag" style="background: #EEF2FF; color: #4338CA; border: 1px solid #C7D2FE; border-radius: 4px; padding: 2px 6px; font-size: 0.72rem; font-weight: 600;">STAC Catalog v1.0</span>
+                <div style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 4px;">C-Band SAR + VNIR/SWIR Optical</div>
+              </td>
+              <td style="padding: 12px 14px;">
+                <div style="font-weight: 600;">10m SAR / 10m Optical</div>
+                <span style="font-size: 0.72rem; color: var(--text-secondary);">5-day Revisit</span>
+              </td>
+              <td style="padding: 12px 14px; font-family: var(--mono); font-size: 0.74rem; color: var(--text-secondary);">
+                <div>sh.dataspace.copernicus.eu/catalog/v1</div>
+                <span style="color: var(--accent); font-size: 0.7rem; font-weight: 500;">collections: [sentinel-1-grd, sentinel-2-l2a]</span>
+              </td>
+              <td style="padding: 12px 14px;">
+                <span style="display: inline-flex; align-items: center; gap: 5px; color: #047857; font-weight: 600; font-size: 0.76rem;">● Connected</span>
+                <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 2px;">Latency: 42ms</div>
+              </td>
+              <td style="padding: 12px 14px; text-align: right;">
+                <button class="btn-ghost small test-conn-btn" data-conn="Copernicus CDSE" style="cursor: pointer; padding: 4px 8px; font-size: 0.75rem;">Ping Test</button>
+              </td>
+            </tr>
+
+            <!-- Row 2: Planet Labs -->
+            <tr style="border-bottom: 1px solid var(--border-color); font-size: 0.82rem;">
+              <td style="padding: 12px 14px;">
+                <strong style="color: var(--text-primary); display: block;">Planet Labs PBC</strong>
+                <span style="font-size: 0.74rem; color: var(--text-secondary);">PlanetScope &amp; SkySat Constellation</span>
+              </td>
+              <td style="padding: 12px 14px;">
+                <span class="bot-tag" style="background: #E0F2FE; color: #0369A1; border: 1px solid #BAE6FD; border-radius: 4px; padding: 2px 6px; font-size: 0.72rem; font-weight: 600;">WMTS / High-Res XYZ</span>
+                <div style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 4px;">3.0m Optical GSD (India Mosaics)</div>
+              </td>
+              <td style="padding: 12px 14px;">
+                <div style="font-weight: 600;">3.0m GSD Optical</div>
+                <span style="font-size: 0.72rem; color: var(--text-secondary);">24h Daily Revisit</span>
+              </td>
+              <td style="padding: 12px 14px; font-family: var(--mono); font-size: 0.74rem; color: var(--text-secondary);">
+                <div>tiles0.planet.com/basemaps/v1</div>
+                <span style="color: var(--accent); font-size: 0.7rem; font-weight: 500;">layer: planet_medres_normalized_analytic</span>
+              </td>
+              <td style="padding: 12px 14px;">
+                <span style="display: inline-flex; align-items: center; gap: 5px; color: #047857; font-weight: 600; font-size: 0.76rem;">● Connected</span>
+                <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 2px;">Latency: 38ms</div>
+              </td>
+              <td style="padding: 12px 14px; text-align: right;">
+                <button class="btn-ghost small test-conn-btn" data-conn="Planet Labs" style="cursor: pointer; padding: 4px 8px; font-size: 0.75rem;">Ping Test</button>
+              </td>
+            </tr>
+
+            <!-- Row 3: USGS / NASA Landsat & MODIS -->
+            <tr style="border-bottom: 1px solid var(--border-color); font-size: 0.82rem;">
+              <td style="padding: 12px 14px;">
+                <strong style="color: var(--text-primary); display: block;">USGS / NASA Earthdata</strong>
+                <span style="font-size: 0.74rem; color: var(--text-secondary);">Landsat 8-9 (OLI/TIRS) &amp; MODIS</span>
+              </td>
+              <td style="padding: 12px 14px;">
+                <span class="bot-tag" style="background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; border-radius: 4px; padding: 2px 6px; font-size: 0.72rem; font-weight: 600;">STAC API &amp; CMR</span>
+                <div style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 4px;">Thermal IR + 30m Optical</div>
+              </td>
+              <td style="padding: 12px 14px;">
+                <div style="font-weight: 600;">30m Optical / 250m Global</div>
+                <span style="font-size: 0.72rem; color: var(--text-secondary);">8-16 Day / Daily Global</span>
+              </td>
+              <td style="padding: 12px 14px; font-family: var(--mono); font-size: 0.74rem; color: var(--text-secondary);">
+                <div>landsatlook.usgs.gov/stac-server</div>
+                <span style="color: var(--accent); font-size: 0.7rem; font-weight: 500;">collections: [landsat-ot-l2, modis]</span>
+              </td>
+              <td style="padding: 12px 14px;">
+                <span style="display: inline-flex; align-items: center; gap: 5px; color: #047857; font-weight: 600; font-size: 0.76rem;">● Connected</span>
+                <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 2px;">Latency: 64ms</div>
+              </td>
+              <td style="padding: 12px 14px; text-align: right;">
+                <button class="btn-ghost small test-conn-btn" data-conn="USGS Landsat/MODIS" style="cursor: pointer; padding: 4px 8px; font-size: 0.75rem;">Ping Test</button>
+              </td>
+            </tr>
+
+            <!-- Row 4: NASA FIRMS -->
+            <tr style="font-size: 0.82rem;">
+              <td style="padding: 12px 14px;">
+                <strong style="color: var(--text-primary); display: block;">NASA LANCE / FIRMS</strong>
+                <span style="font-size: 0.74rem; color: var(--text-secondary);">VIIRS (VNP46A2) &amp; MODIS Nightfire</span>
+              </td>
+              <td style="padding: 12px 14px;">
+                <span class="bot-tag" style="background: #FEE2E2; color: #991B1B; border: 1px solid #FECACA; border-radius: 4px; padding: 2px 6px; font-size: 0.72rem; font-weight: 600;">WMS / NRT Vector</span>
+                <div style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 4px;">Thermal Radiant Heat &amp; Flaring MW</div>
+              </td>
+              <td style="padding: 12px 14px;">
+                <div style="font-weight: 600;">750m Thermal Radiometry</div>
+                <span style="font-size: 0.72rem; color: var(--text-secondary);">Near-Real-Time (1-3 Hours)</span>
+              </td>
+              <td style="padding: 12px 14px; font-family: var(--mono); font-size: 0.74rem; color: var(--text-secondary);">
+                <div>firms.modaps.eosdis.nasa.gov/wms</div>
+                <span style="color: var(--accent); font-size: 0.7rem; font-weight: 500;">layers: [viirs_iband_nrt, modis_nrt]</span>
+              </td>
+              <td style="padding: 12px 14px;">
+                <span style="display: inline-flex; align-items: center; gap: 5px; color: #047857; font-weight: 600; font-size: 0.76rem;">● Connected</span>
+                <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 2px;">Latency: 51ms</div>
+              </td>
+              <td style="padding: 12px 14px; text-align: right;">
+                <button class="btn-ghost small test-conn-btn" data-conn="NASA FIRMS" style="cursor: pointer; padding: 4px 8px; font-size: 0.75rem;">Ping Test</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+        <div style="font-size: 0.75rem; color: var(--text-secondary); font-family: var(--mono);">
+          Ingest Proxy: <span style="color: var(--text-primary); font-weight: 600;">sh.dataspace.copernicus.eu &amp; planet-tiles/v1</span>
+        </div>
+        <button class="primary-btn small" id="btn-close-connections-modal-footer" style="padding: 6px 14px; font-size: 0.82rem;">Close Window</button>
+      </div>
+    </div>
+  </div>
 
   <script src="/af-header.js"></script>
   <script src="/af-footer.js"></script>
