@@ -53,6 +53,8 @@ export const dictionaries = {
     "pillars.operational_desc": "Flaring limits, downtime, and operational tracking",
     "pillars.security": "Asset Security",
     "pillars.security_desc": "Physical footprint and boundary anomalies",
+    "pillars.divergence": "Divergence Layer",
+    "pillars.divergence_desc": "Multi-source divergence analysis & cross-sensor telemetry reconciliation",
     
     // Dashboard Map
     "map.layers_title": "Multi-Sensor Analysis Layers",
@@ -166,6 +168,8 @@ export const dictionaries = {
     "pillars.operational_desc": "Límites de quema, tiempo de inactividad y seguimiento",
     "pillars.security": "Seguridad de Activos",
     "pillars.security_desc": "Anomalías en los límites y huella física",
+    "pillars.divergence": "Capa de Divergencia",
+    "pillars.divergence_desc": "Análisis de divergencia multifuente y reconciliación de telemetría multisensor",
     
     // Dashboard Map
     "map.layers_title": "Capas de Análisis Multisensor",
@@ -279,6 +283,8 @@ export const dictionaries = {
     "pillars.operational_desc": "Limites de torchage, temps d'arrêt et suivi",
     "pillars.security": "Sécurité des Actifs",
     "pillars.security_desc": "Anomalies aux limites et empreinte physique",
+    "pillars.divergence": "Couche de Divergence",
+    "pillars.divergence_desc": "Analyse de divergence multi-sources et réconciliation de télémétrie multi-capteurs",
     
     // Dashboard Map
     "map.layers_title": "Couches d'Analyse Multi-Capteurs",

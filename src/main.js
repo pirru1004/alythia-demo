@@ -12,6 +12,7 @@ import { openAssetDashboard } from './asset_security.js';
 import { assetSiteByNearest, assetSites } from './asset_security_adapter.js';
 import { initOperationalEfficiency, selectOperationalFacility } from './operational_efficiency.js';
 import { initSustainabilityCompliance, openSustainabilityCompliance } from './sustainability_compliance.js';
+import { initDivergenceLayer, resizeDivergenceMap } from './divergence_layer.js';
 import { setGrounding, clearGrounding, getGroundingContext, hasGrounding, onGroundingChange, registerDrawer } from './ask_grounding.js';
 
 // Which pillar opened the shared compliance map. Determines what clicking a pin
@@ -46,6 +47,9 @@ function navigateTo(viewId) {
       setTimeout(() => {
         map.invalidateSize();
       }, 300);
+    }
+    if (viewId === 'view-divergence') {
+      resizeDivergenceMap();
     }
   }
 
@@ -118,6 +122,13 @@ document.getElementById('btn-goto-operational')?.addEventListener('click', () =>
   setMapMode('operational');
   navigateTo('view-map');
 });
+
+document.getElementById('btn-goto-divergence')?.addEventListener('click', () => {
+  navigateTo('view-divergence');
+});
+
+// Initialize Divergence Layer
+initDivergenceLayer();
 
 // Switch the shared map between pillars: retitle the header and remember the mode
 // so the pin-click handler knows which dashboard to open.

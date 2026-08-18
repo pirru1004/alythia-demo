@@ -305,6 +305,13 @@
               <span class="pillar-state state-available" data-i18n="dashboard.open_workspace">Open workspace →</span>
             </button>
 
+            <button class="pillar-card is-available" id="btn-goto-divergence">
+              <div class="pillar-num">04</div>
+              <h3 data-i18n="pillars.divergence">Divergence Layer</h3>
+              <p data-i18n="pillars.divergence_desc">Multi-source divergence analysis & cross-sensor telemetry reconciliation</p>
+              <span class="pillar-state state-available" data-i18n="dashboard.open_workspace">Open workspace →</span>
+            </button>
+
           </div>
 
           <!-- How Alythia works -->
@@ -739,6 +746,272 @@
       </div>
       
     </section>
+
+      <!-- ==========================================
+           VIEW 6: DIVERGENCE LAYER (DEMO 5-AREA LAYOUT)
+           ========================================== -->
+      <section id="view-divergence" class="view hidden">
+        <div class="divergence-layout">
+          
+          <!-- AREA 1: TOP (Spanning full width left to right) -->
+          <header class="divergence-area-top">
+            <div class="divergence-top-inner">
+              <div class="divergence-top-left">
+                <button class="back-btn btn-back-dashboard" id="btn-back-from-divergence">← Launchpad</button>
+                <div class="divergence-title-block">
+                  <div class="divergence-badge-row">
+                    <h1 class="divergence-title">Divergence Layer</h1>
+                    <span class="divergence-demo-tag">● DEMO LAYER</span>
+                    <span class="divergence-version-tag">v2.4 FUSION ENGINE</span>
+                  </div>
+                  <p class="divergence-subline">Cross-Sensor Telemetry Reconciliation & Multi-Source Discrepancy Analysis</p>
+                </div>
+              </div>
+
+              <div class="divergence-top-center">
+                <div class="divergence-site-selector">
+                  <span class="selector-label">Target Region:</span>
+                  <select id="divergence-facility-select" class="divergence-select">
+                    <option value="jamnagar" selected>Jamnagar Refining Hub (Gujarat, India) — +18.4%</option>
+                    <option value="mumbai_high">Mumbai High Offshore Basin (India) — +12.1%</option>
+                    <option value="hazira">Hazira Petrochemical Complex (Gujarat, India) — +15.8%</option>
+                    <option value="kg_basin">KG-D6 Basin Deepwater (Andhra Pradesh, India) — +9.3%</option>
+                    <option value="barauni">Barauni Industrial Belt (Bihar, India) — +14.6%</option>
+                    <option value="korpezhe">Korpezhe (Turkmenistan — Global Benchmark)</option>
+                    <option value="groundbirch">Groundbirch (Canada — Baseline Clean Site)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="divergence-top-right">
+                <div class="divergence-sync-status">
+                  <span class="status-indicator online"></span>
+                  <span class="sync-text">Planet Feed Active</span>
+                </div>
+                <button class="primary-btn outline small" id="btn-recalibrate-divergence">Recalibrate Sensors</button>
+              </div>
+            </div>
+          </header>
+
+          <!-- AREA 2, 3, 4: CENTER (3 Columns) -->
+          <div class="divergence-area-center">
+            
+            <!-- AREA 2: CENTER LEFT COLUMN (Streams & Telemetry) -->
+            <aside class="divergence-col divergence-col-left">
+              <div class="col-head">
+                <span class="col-num">01</span>
+                <div>
+                  <h2 class="col-title">Telemetry Feeds & Disclosures</h2>
+                  <p class="col-sub">Multi-sensor inputs vs operator filings</p>
+                </div>
+              </div>
+
+              <div class="divergence-stream-list">
+                <!-- Stream 1 -->
+                <div class="stream-card active">
+                  <div class="stream-card-top">
+                    <div class="stream-info">
+                      <span class="stream-type">DISCLOSURE BASELINE</span>
+                      <h3 class="stream-name">Self-Reported Emissions Target</h3>
+                    </div>
+                    <span class="stream-val">0.05% limit</span>
+                  </div>
+                  <div class="stream-meta">
+                    <span>Source: Statutory Environmental Return</span>
+                    <span class="stream-status verified">Declared</span>
+                  </div>
+                </div>
+
+                <!-- Stream 2: Planet Connection -->
+                <div class="stream-card active" style="border-left: 3px solid #00F0FF; background: rgba(0, 240, 255, 0.04);">
+                  <div class="stream-card-top">
+                    <div class="stream-info">
+                      <span class="stream-type" style="color: #00F0FF;">PLANET LABS SATELLITE</span>
+                      <h3 class="stream-name">PlanetScope 3m High-Res Feed</h3>
+                    </div>
+                    <span class="stream-val" style="color: #00F0FF;">3.0m Optical</span>
+                  </div>
+                  <div class="stream-meta">
+                    <span>Pass: Daily Revisit (India Coverage)</span>
+                    <span class="stream-status active" style="background: #E0F2FE; color: #0369A1;">Connected</span>
+                  </div>
+                </div>
+
+                <!-- Stream 3 -->
+                <div class="stream-card active">
+                  <div class="stream-card-top">
+                    <div class="stream-info">
+                      <span class="stream-type">SATELLITE SPECTROMETRY</span>
+                      <h3 class="stream-name">Sentinel-5P TROPOMI (CH₄ / NO₂)</h3>
+                    </div>
+                    <span class="stream-val text-alert">+0.84% excess</span>
+                  </div>
+                  <div class="stream-meta">
+                    <span>Pass: S5P_L2__CH4 (India Swath)</span>
+                    <span class="stream-status active">Observed</span>
+                  </div>
+                </div>
+
+                <!-- Stream 4 -->
+                <div class="stream-card active">
+                  <div class="stream-card-top">
+                    <div class="stream-info">
+                      <span class="stream-type">THERMAL RADIOMETRY</span>
+                      <h3 class="stream-name">VIIRS Nightfire (Flaring MW)</h3>
+                    </div>
+                    <span class="stream-val text-warning">0.024 BCM/yr</span>
+                  </div>
+                  <div class="stream-meta">
+                    <span>Pass: VNP46A2 Nightfire 750m</span>
+                    <span class="stream-status active">Observed</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-foot-action">
+                <button class="btn-ghost small full-width" id="btn-add-sensor-feed">+ Add Sensor Stream</button>
+              </div>
+            </aside>
+
+            <!-- AREA 3: CENTER MIDDLE COLUMN (Interactive India Map with Planet Connection) -->
+            <main class="divergence-col divergence-col-middle" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+              <div class="col-head" style="padding: 1rem 1.25rem 0.75rem; border-bottom: 1px solid var(--border-color); margin: 0;">
+                <span class="col-num">02</span>
+                <div class="col-head-flex">
+                  <div>
+                    <h2 class="col-title">Discrepancy Matrix & Planet Map (India)</h2>
+                    <p class="col-sub">PlanetScope 3m satellite imagery + TROPOMI discrepancy overlay</p>
+                  </div>
+                  <div class="planet-active-chip">
+                    <span class="pulse-dot"></span>
+                    <span>Planet Feed Connected</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interactive Leaflet Map Viewport -->
+              <div class="divergence-map-wrapper" style="flex: 1; position: relative; width: 100%; min-height: 380px;">
+                <div id="divergence-map" style="width: 100%; height: 100%; background: #0b101b; z-index: 1;"></div>
+                
+                <!-- Floating Map Badge Overlay -->
+                <div class="divergence-map-badge">
+                  <span class="map-badge-icon">🛰️</span>
+                  <span><strong>PlanetScope 3m</strong> Constellation Overpass: <strong>India Region</strong></span>
+                </div>
+
+                <!-- Floating Coordinates Overlay -->
+                <div class="divergence-coords-badge" id="divergence-coords-hud">
+                  <span>LAT: <strong id="divergence-lat">21.7679° N</strong></span>
+                  <span>LNG: <strong id="divergence-lng">78.8718° E</strong></span>
+                  <span class="badge-sub">INDIA CENTER</span>
+                </div>
+              </div>
+
+              <!-- Map Footer Legend -->
+              <div class="matrix-legend-strip" style="padding: 0.6rem 1rem; background: var(--surface); border-top: 1px solid var(--border-color);">
+                <div class="legend-item"><span class="legend-swatch planet"></span> Planet 3m Satellite</div>
+                <div class="legend-item"><span class="legend-swatch baseline"></span> Declared Operator Target</div>
+                <div class="legend-item"><span class="legend-swatch divergence"></span> Divergence Delta Hotspot</div>
+              </div>
+            </main>
+
+            <!-- AREA 4: CENTER RIGHT COLUMN (Analytics & Severity Scoring) -->
+            <aside class="divergence-col divergence-col-right">
+              <div class="col-head">
+                <span class="col-num">03</span>
+                <div>
+                  <h2 class="col-title">Variance Scoring & Assessment</h2>
+                  <p class="col-sub">Statistical confidence & divergence index</p>
+                </div>
+              </div>
+
+              <!-- Overall Divergence Gauge Card -->
+              <div class="divergence-score-card">
+                <span class="score-label">OVERALL DIVERGENCE INDEX (ODI)</span>
+                <div class="score-value-row">
+                  <span class="score-number">+14.2%</span>
+                  <span class="score-badge badge-warning">Elevated Delta</span>
+                </div>
+                <p class="score-narrative">Observed satellite column concentration significantly exceeds declared baseline flaring parameters.</p>
+                
+                <div class="confidence-bar-wrap">
+                  <div class="confidence-label-row">
+                    <span>Sensor Confidence</span>
+                    <span class="conf-pct">94.8%</span>
+                  </div>
+                  <div class="confidence-bar-track">
+                    <div class="confidence-bar-fill" style="width: 94.8%;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Variance Breakdown Table -->
+              <div class="variance-breakdown">
+                <h3 class="breakdown-title">Variance Decomposition</h3>
+                <div class="variance-item">
+                  <span class="var-name">Methane Enhancements (CH₄)</span>
+                  <span class="var-val text-alert">+0.624% (12.2 ppb)</span>
+                </div>
+                <div class="variance-item">
+                  <span class="var-name">Combustion Flaring Gap</span>
+                  <span class="var-val text-warning">+0.0093 BCM/yr</span>
+                </div>
+                <div class="variance-item">
+                  <span class="var-name">Atmospheric Wind Vector (ERA5)</span>
+                  <span class="var-val">3.4 m/s @ 242° WSW</span>
+                </div>
+                <div class="variance-item">
+                  <span class="var-name">Combustion Inefficiency Index</span>
+                  <span class="var-val text-alert">High (Unlit Flaring Likely)</span>
+                </div>
+              </div>
+
+              <!-- Actionable Guidance -->
+              <div class="divergence-recommendations">
+                <h3 class="breakdown-title">Tactical Action Protocol</h3>
+                <ul class="rec-list">
+                  <li>Deploy drone optical gas imaging (OGI) over Flare Stack #2.</li>
+                  <li>Cross-verify operator supervisory control logs for May 2026.</li>
+                  <li>Export flagged divergence packet to compliance audit.</li>
+                </ul>
+              </div>
+            </aside>
+
+          </div>
+
+          <!-- AREA 5: BOTTOM (Spanning full width left to right) -->
+          <footer class="divergence-area-bottom">
+            <div class="divergence-bottom-inner">
+              <div class="bottom-left-info">
+                <span class="bot-label">TELEMETRY PROVENANCE:</span>
+                <span class="bot-tags">
+                  <span class="bot-tag">TROPOMI S5P</span>
+                  <span class="bot-tag">VIIRS VNP46A2</span>
+                  <span class="bot-tag">SENTINEL-1 SAR</span>
+                  <span class="bot-tag">ERA5 METEOROLOGY</span>
+                </span>
+              </div>
+
+              <div class="bottom-center-timeline">
+                <span class="timeline-label">Temporal Window:</span>
+                <div class="timeline-ticks">
+                  <button class="tick-btn">2025-05</button>
+                  <button class="tick-btn">2025-08</button>
+                  <button class="tick-btn">2025-11</button>
+                  <button class="tick-btn">2026-02</button>
+                  <button class="tick-btn active">2026-05 (Latest)</button>
+                </div>
+              </div>
+
+              <div class="bottom-right-actions">
+                <button class="primary-btn outline small" id="btn-export-divergence">Export Dossier (PDF)</button>
+                <button class="primary-btn small" id="btn-sync-registry">Sync Registry</button>
+              </div>
+            </div>
+          </footer>
+
+        </div>
+      </section>
 
       <!-- ==========================================
            VIEW 4: MY PROFILE
