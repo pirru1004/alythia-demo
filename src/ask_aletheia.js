@@ -91,7 +91,7 @@ export function buildSystemPrompt(f, scenario) {
     projection_months: scenario.projMonths,
   };
   return [
-    `You are Aletheia, a methane compliance-SCREENING analyst. You screen with TROPOMI (a coarse screening instrument) and recommend finer-sensor / drone / OGI confirmation. You are READ-ONLY: you do not fetch live data, browse, or call external services.`,
+    `You are Alythia, a methane compliance-SCREENING analyst. You screen with TROPOMI (a coarse screening instrument) and recommend finer-sensor / drone / OGI confirmation. You are READ-ONLY: you do not fetch live data, browse, or call external services.`,
     ``,
     `You may ONLY use the facility record and on-page scenario JSON below. Do not use outside knowledge to introduce new numbers or facts.`,
     ``,
@@ -129,13 +129,14 @@ function answerAsset(qRaw, f) {
   if (!q) return `Ask me about <b>${name}</b>'s monitored footprint — its status, the method, or next steps.`;
 
   if (has('hello', 'hi ', 'help', 'what can you', 'who are you'))
-    return `I'm Aletheia. For Asset Security I track the physical footprint of <b>${name}</b> from optical and SAR imagery — read-only and grounded only in this site's record. Ask about its footprint status, the method, or what to do next.`;
+    return `I'm Alythia. For Asset Security I track the physical footprint of <b>${name}</b> from optical and SAR imagery — read-only and grounded only in this site's record. Ask about its footprint status, the method, or what to do next.`;
 
   if (has('pillar', 'sustainab', 'operational efficiency', 'other pillar'))
-    return `Aletheia has 3 pillars: ${`<ul class="a-ul">` +
+    return `Alythia has 4 pillars: ${`<ul class="a-ul">` +
       `<li><b>Sustainability</b> — methane vs local background</li>` +
       `<li><b>Operational Efficiency</b> — flaring & asset uptime</li>` +
-      `<li><b>Asset Security</b> — physical footprint from optical + SAR</li></ul>`}Right now I'm grounded on <b>${name}</b> under Asset Security.`;
+      `<li><b>Asset Security</b> — physical footprint from optical + SAR</li>` +
+      `<li><b>Divergence Layer</b> — multi-sensor reconciliation</li></ul>`}Right now I'm grounded on <b>${name}</b> under Asset Security.`;
 
   if (has('method', 'how do', 'how does', 'how was', 'measur', 'magnitude', 'quantif', 'satellite', 'sentinel', 'sar', 'optical', 'instrument', 'work'))
     return `Method: ${method}.${noteSoft || ` <span class="a-soft">Footprint is derived from optical (Sentinel-2) and SAR (Sentinel-1) imagery — screening-grade, not a legal survey.</span>`}`;
@@ -165,13 +166,13 @@ function answerDeterministic(qRaw, f, scenario) {
   }
   const has = (...ks) => ks.some(k => q.includes(k));
   const ul = arr => `<ul class="a-ul">${arr.map(x => `<li>${x}</li>`).join('')}</ul>`;
-  const role = `As an Aletheia AI analyst, I assess multi-sensor orbital data across our 3 pillars: Sustainability (Methane), Operational Efficiency (Flaring), and Asset Security (Footprint & SAR).`;
+  const role = `As an Alythia AI analyst, I assess multi-sensor orbital data across our pillars: Sustainability (Methane), Operational Efficiency (Flaring), Asset Security (Footprint & SAR), and Divergence Layer.`;
 
   if (!q) return `Ask me about <b>${esc(f.name)}</b> — try one of the suggested questions below.`;
 
   // greeting / help / pillars
   if (has('hello', 'hi ', 'help', 'what can you', 'who are you', 'pillars')) {
-    return `I'm Aletheia. ${role} I answer only from <b>${esc(f.name)}</b>'s observed record plus the current scenario — read-only, no live data. Try: “Is this site elevated?”, “How was the magnitude measured?”, or ask about our 3 pillars.`;
+    return `I'm Alythia. ${role} I answer only from <b>${esc(f.name)}</b>'s observed record plus the current scenario — read-only, no live data. Try: “Is this site elevated?”, “How was the magnitude measured?”, or ask about our pillars.`;
   }
 
   // elevated / excess / status

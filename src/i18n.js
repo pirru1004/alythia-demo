@@ -68,14 +68,14 @@ export const dictionaries = {
     "report.download": "Download Report (PDF)",
     
     // Chatbot UI
-    "chat.title": "Ask Aletheia",
+    "chat.title": "Ask Alythia",
     "chat.subtitle": "grounded only in this facility's record · read-only, no live data",
     "chat.placeholder": "Ask about this facility…",
     "chat.ask_btn": "Ask",
-    "chat.disclaimer": "Answers compose only from this facility's pipeline record + the scenario shown above. Aletheia screens with satellites and recommends fine-sensor / drone confirmation — it never fetches live data or browses.",
+    "chat.disclaimer": "Answers compose only from this facility's pipeline record + the scenario shown above. Alythia screens with satellites and recommends fine-sensor / drone confirmation — it never fetches live data or browses.",
 
     // Dashboard UI
-    "dashboard.title": "Aletheia Dashboard",
+    "dashboard.title": "Alythia Dashboard",
     "dashboard.auth": "Authenticated",
     "dashboard.home": "← Home",
     "dashboard.launchpad": "Authenticated launchpad",
@@ -183,14 +183,14 @@ export const dictionaries = {
     "report.download": "Descargar Reporte (PDF)",
     
     // Chatbot UI
-    "chat.title": "Pregúntale a Aletheia",
+    "chat.title": "Pregúntale a Alythia",
     "chat.subtitle": "basado únicamente en el registro de esta instalación · solo lectura, sin datos en vivo",
     "chat.placeholder": "Pregunte sobre esta instalación…",
     "chat.ask_btn": "Preguntar",
-    "chat.disclaimer": "Las respuestas se componen solo de los registros y escenarios de esta instalación. Aletheia no busca en internet.",
+    "chat.disclaimer": "Las respuestas se componen solo de los registros y escenarios de esta instalación. Alythia no busca en internet.",
 
     // Dashboard UI
-    "dashboard.title": "Panel de Aletheia",
+    "dashboard.title": "Panel de Alythia",
     "dashboard.auth": "Autenticado",
     "dashboard.home": "← Inicio",
     "dashboard.launchpad": "Plataforma autenticada",
@@ -298,14 +298,14 @@ export const dictionaries = {
     "report.download": "Télécharger le rapport (PDF)",
     
     // Chatbot UI
-    "chat.title": "Demandez à Aletheia",
+    "chat.title": "Demandez à Alythia",
     "chat.subtitle": "basé uniquement sur le dossier de cette installation · lecture seule",
     "chat.placeholder": "Posez une question sur cette installation…",
     "chat.ask_btn": "Demander",
-    "chat.disclaimer": "Les réponses sont composées uniquement à partir du dossier de cette installation et du scénario affiché ci-dessus. Aletheia ne navigue pas sur Internet.",
+    "chat.disclaimer": "Les réponses sont composées uniquement à partir du dossier de cette installation et du scénario affiché ci-dessus. Alythia ne navigue pas sur Internet.",
 
     // Dashboard UI
-    "dashboard.title": "Tableau de Bord Aletheia",
+    "dashboard.title": "Tableau de Bord Alythia",
     "dashboard.auth": "Authentifié",
     "dashboard.home": "← Accueil",
     "dashboard.launchpad": "Plateforme authentifiée",
