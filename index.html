@@ -770,15 +770,13 @@
 
               <div class="divergence-top-center">
                 <div class="divergence-site-selector">
-                  <span class="selector-label">Target Region:</span>
+                  <span class="selector-label">Agro-Catchment:</span>
                   <select id="divergence-facility-select" class="divergence-select">
-                    <option value="jamnagar" selected>Jamnagar Refining Hub (Gujarat, India) — +18.4%</option>
-                    <option value="mumbai_high">Mumbai High Offshore Basin (India) — +12.1%</option>
-                    <option value="hazira">Hazira Petrochemical Complex (Gujarat, India) — +15.8%</option>
-                    <option value="kg_basin">KG-D6 Basin Deepwater (Andhra Pradesh, India) — +9.3%</option>
-                    <option value="barauni">Barauni Industrial Belt (Bihar, India) — +14.6%</option>
-                    <option value="korpezhe">Korpezhe (Turkmenistan — Global Benchmark)</option>
-                    <option value="groundbirch">Groundbirch (Canada — Baseline Clean Site)</option>
+                    <option value="karnal" selected>Karnal Depot (Haryana) — Sowing Sweep Active</option>
+                    <option value="ludhiana">Ludhiana Central Depot (Punjab) — Kharif Paddy</option>
+                    <option value="guntur">Guntur Agro-Cluster (Andhra Pradesh) — Heading (+12.4%)</option>
+                    <option value="muzaffarpur">Muzaffarpur District (Bihar) — Deficit (-16.8%)</option>
+                    <option value="surat_hazira">Surat / Hazira Basin (Gujarat) — Mixed Crop</option>
                   </select>
                 </div>
               </div>
@@ -786,7 +784,7 @@
               <div class="divergence-top-right">
                 <div class="divergence-sync-status">
                   <span class="status-indicator online"></span>
-                  <span class="sync-text">Planet Feed Active</span>
+                  <span class="sync-text">S1/S2 Fusion Ingest Active</span>
                 </div>
                 <button class="primary-btn outline small" id="btn-open-connections-settings">⚙️ Data Connections</button>
                 <button class="primary-btn outline small" id="btn-recalibrate-divergence">Recalibrate Sensors</button>
@@ -797,267 +795,281 @@
           <!-- AREA 2, 3, 4: CENTER (3 Columns) -->
           <div class="divergence-area-center">
             
-            <!-- AREA 2: CENTER LEFT COLUMN (Streams & Telemetry) -->
+            <!-- AREA 2: CENTER LEFT COLUMN (3 Presets & Telemetry Engine) -->
             <aside class="divergence-col divergence-col-left" id="divergence-col-left">
               <div class="col-head">
                 <span class="col-num">01</span>
                 <div>
-                  <h2 class="col-title">Telemetry Feeds &amp; Disclosures</h2>
-                  <p class="col-sub">Multi-sensor inputs vs operator filings</p>
+                  <h2 class="col-title">Agricultural Telemetry &amp; Presets</h2>
+                  <p class="col-sub">One engine, three operational lenses</p>
                 </div>
+              </div>
+
+              <!-- Persistent Base Foundation Strip (Always-On Underneath All 3) -->
+              <div class="base-engine-strip">
+                <span class="base-engine-dot"></span>
+                <span><strong>Base Engine:</strong> Sentinel-1 SAR + Sentinel-2 Optical → Classification &amp; Phenology</span>
               </div>
 
               <!-- 3 Interactive Layer Selector Boxes at Top -->
               <div class="divergence-layer-boxes">
-                <!-- Layer Box 1: Sustainability -->
-                <button class="layer-box-btn" data-layer="sustainability" id="btn-layer-sustainability" title="View Sustainability Layer">
+                <!-- Box 1: Distribution & Inventory Positioning -->
+                <button class="layer-box-btn active" data-layer="box1" id="btn-layer-box1" title="Distribution &amp; Inventory Positioning (Proposed Pilot)">
                   <div class="layer-box-top">
-                    <span class="layer-box-icon">🌿</span>
-                    <span class="layer-box-badge">Layer 01</span>
+                    <span class="layer-box-icon">📦</span>
+                    <span class="layer-box-badge">Pilot Preset</span>
                   </div>
-                  <div class="layer-box-title">Sustainability</div>
-                  <div class="layer-box-sub">Methane &amp; Filings</div>
+                  <div class="layer-box-title">Distribution &amp; Inventory</div>
+                  <div class="layer-box-sub">Sowing &amp; Catchment</div>
                 </button>
 
-                <!-- Layer Box 2: Operational Efficiency -->
-                <button class="layer-box-btn" data-layer="operations" id="btn-layer-operations" title="View Operations Layer">
+                <!-- Box 2: Demand Sensing & Forecasting -->
+                <button class="layer-box-btn" data-layer="box2" id="btn-layer-box2" title="Demand Sensing &amp; Forecasting (Deviation from Normal)">
                   <div class="layer-box-top">
-                    <span class="layer-box-icon">🔥</span>
-                    <span class="layer-box-badge">Layer 02</span>
+                    <span class="layer-box-icon">📊</span>
+                    <span class="layer-box-badge">Divergence</span>
                   </div>
-                  <div class="layer-box-title">Operations</div>
-                  <div class="layer-box-sub">Flaring &amp; Uptime</div>
+                  <div class="layer-box-title">Demand Sensing</div>
+                  <div class="layer-box-sub">Baseline Deviation</div>
                 </button>
 
-                <!-- Layer Box 3: Asset Security -->
-                <button class="layer-box-btn" data-layer="security" id="btn-layer-security" title="View Asset Security Layer">
+                <!-- Box 3: Collection & Credit Planning -->
+                <button class="layer-box-btn" data-layer="box3" id="btn-layer-box3" title="Collection &amp; Credit Planning (Composite Stress Rank)">
                   <div class="layer-box-top">
-                    <span class="layer-box-icon">🛡️</span>
-                    <span class="layer-box-badge">Layer 03</span>
+                    <span class="layer-box-icon">🌾</span>
+                    <span class="layer-box-badge">Risk &amp; Mandi</span>
                   </div>
-                  <div class="layer-box-title">Asset Security</div>
-                  <div class="layer-box-sub">Footprint &amp; SAR</div>
+                  <div class="layer-box-title">Collection &amp; Credit</div>
+                  <div class="layer-box-sub">Composite Stress Rank</div>
                 </button>
               </div>
 
-              <!-- SUB-WINDOW 0: Default All Feeds Overview -->
-              <div class="divergence-sub-panel active" id="panel-layer-overview">
-                <div class="divergence-stream-list">
-                  <!-- Stream 1 -->
-                  <div class="stream-card active">
-                    <div class="stream-card-top">
-                      <div class="stream-info">
-                        <span class="stream-type">DISCLOSURE BASELINE</span>
-                        <h3 class="stream-name">Self-Reported Emissions Target</h3>
-                      </div>
-                      <span class="stream-val">0.05% limit</span>
-                    </div>
-                    <div class="stream-meta">
-                      <span>Source: Statutory Environmental Return</span>
-                      <span class="stream-status verified">Declared</span>
-                    </div>
-                  </div>
+              <!-- SUB-WINDOW 1: Box 1 — Distribution & Inventory Positioning (The Proposed Pilot) -->
+              <div class="layer-detail-window active" id="panel-layer-box1">
+                <div class="layer-window-header">
+                  <span class="layer-window-chip">📦 Box 01 Active · Pilot Preset</span>
+                  <span style="font-size: 0.65rem; font-family: var(--mono); color: #059669; font-weight: 600;">Depot Catchment View</span>
+                </div>
 
-                  <!-- Stream 2: Planet Connection -->
-                  <div class="stream-card active" style="border-left: 3px solid #00F0FF; background: rgba(0, 240, 255, 0.04);">
-                    <div class="stream-card-top">
-                      <div class="stream-info">
-                        <span class="stream-type" style="color: #00F0FF;">PLANET LABS SATELLITE</span>
-                        <h3 class="stream-name">PlanetScope 3m High-Res Feed</h3>
-                      </div>
-                      <span class="stream-val" style="color: #00F0FF;">3.0m Optical</span>
-                    </div>
-                    <div class="stream-meta">
-                      <span>Pass: Daily Revisit (India Coverage)</span>
-                      <span class="stream-status active" style="background: #E0F2FE; color: #0369A1;">Connected</span>
-                    </div>
-                  </div>
+                <!-- Honesty & Scope Rationale Line -->
+                <div class="preset-rationale-banner">
+                  <span class="deliberate-absence-tag">Deliberately Absent</span>
+                  <strong>Yield &amp; Pest:</strong> This operational placement decision needs acreage, sowing distribution and stage; it does not need yield.
+                </div>
 
-                  <!-- Stream 3 -->
-                  <div class="stream-card active">
-                    <div class="stream-card-top">
-                      <div class="stream-info">
-                        <span class="stream-type">SATELLITE SPECTROMETRY</span>
-                        <h3 class="stream-name">Sentinel-5P TROPOMI (CH₄ / NO₂)</h3>
-                      </div>
-                      <span class="stream-val text-alert">+0.84% excess</span>
-                    </div>
-                    <div class="stream-meta">
-                      <span>Pass: S5P_L2__CH4 (India Swath)</span>
-                      <span class="stream-status active">Observed</span>
-                    </div>
+                <!-- Catchment & Acreage Summary -->
+                <div class="layer-window-card">
+                  <div class="layer-window-card-title">Observed Paddy Acreage in Catchment</div>
+                  <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); font-family: var(--mono);" id="b1-catchment-acreage">
+                    68,400 ha
                   </div>
-
-                  <!-- Stream 4 -->
-                  <div class="stream-card active">
-                    <div class="stream-card-top">
-                      <div class="stream-info">
-                        <span class="stream-type">THERMAL RADIOMETRY</span>
-                        <h3 class="stream-name">VIIRS Nightfire (Flaring MW)</h3>
-                      </div>
-                      <span class="stream-val text-warning">0.024 BCM/yr</span>
-                    </div>
-                    <div class="stream-meta">
-                      <span>Pass: VNP46A2 Nightfire 750m</span>
-                      <span class="stream-status active">Observed</span>
-                    </div>
+                  <div style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 2px;">
+                    Catchment: <strong id="b1-depot-name">Karnal Central Depot (Haryana)</strong> · 25km radius
                   </div>
+                </div>
 
-                  <!-- Stream 5: ERA5 / IMD / CHIRPS / GPM -->
-                  <div class="stream-card active">
-                    <div class="stream-card-top">
-                      <div class="stream-info">
-                        <span class="stream-type">ATMOSPHERE &amp; PRECIP</span>
-                        <h3 class="stream-name">ERA5 / IMD / CHIRPS / GPM</h3>
-                      </div>
-                      <span class="stream-val" id="stream-precip-val" style="color: #0284C7; font-weight: 600;">14.8 mm / +8.6%</span>
+                <!-- Sowing Distribution (P25 / Median / P75) -->
+                <div class="layer-window-card">
+                  <div class="layer-window-card-title">Sowing Distribution &amp; Front Progress</div>
+                  <div class="sowing-dist-track">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.68rem; font-family: var(--mono); color: var(--text-secondary);">
+                      <span>Early (P25)</span>
+                      <span>Median Peak</span>
+                      <span>Late (P75)</span>
                     </div>
-                    <div class="stream-meta">
-                      <span id="stream-precip-meta">Wind: 4.8 m/s · IMD Normal</span>
-                      <span class="stream-status active" style="background:#E0F2FE; color:#0369A1;">Live Sync</span>
+                    <div class="sowing-track-bar">
+                      <div class="sowing-track-range" id="b1-sowing-range-bar"></div>
+                      <div class="sowing-track-point" style="left: 20%;" title="P25 Sowing Date"></div>
+                      <div class="sowing-track-point median" style="left: 50%;" title="Median Peak Sowing Date"></div>
+                      <div class="sowing-track-point" style="left: 75%;" title="P75 Sowing Date"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.72rem; font-weight: 600; font-family: var(--mono); color: var(--text-primary);">
+                      <span id="b1-sowing-p25">Jun 14</span>
+                      <span id="b1-sowing-median" style="color: #059669;">Jun 26</span>
+                      <span id="b1-sowing-p75">Jul 08</span>
                     </div>
                   </div>
                 </div>
 
-                <div class="col-foot-action" style="margin-top: 0.75rem;">
-                  <button class="btn-ghost small full-width" id="btn-add-sensor-feed">+ Add Sensor Stream</button>
+                <!-- Application Window & Lead Time Remaining -->
+                <div class="layer-window-card">
+                  <div class="layer-window-card-title">Placement Timing &amp; Lead Time</div>
+                  <div class="layer-metric-grid">
+                    <div class="layer-metric-box">
+                      <div class="layer-metric-box-sub">Application Window</div>
+                      <div class="layer-metric-box-val" id="b1-app-window" style="font-size: 0.78rem; color: #0284C7;">
+                        Jul 16 – Jul 26
+                      </div>
+                      <div style="font-size: 0.62rem; color: var(--text-secondary);">Tolerance: ±3 days</div>
+                    </div>
+                    <div class="layer-metric-box" style="background: #ECFDF5; border-color: #A7F3D0;">
+                      <div class="layer-metric-box-sub" style="color: #047857;">Lead Time Remaining</div>
+                      <div class="layer-metric-box-val" id="b1-lead-time" style="color: #059669;">
+                        12 Days
+                      </div>
+                      <div style="font-size: 0.62rem; color: #047857;">Stocking Priority: High</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Active Layers Checklist -->
+                <div style="font-size: 0.68rem; font-family: var(--mono); color: var(--text-secondary); border-top: 1px solid var(--border-color); padding-top: 6px;">
+                  <strong style="color: var(--text-primary);">Layers On:</strong> Crop classification (paddy/non-paddy) • Sowing date distribution • Crop stage • Soil moisture (ERA5/SAR) • Depot network
                 </div>
               </div>
 
-              <!-- SUB-WINDOW 1: Sustainability Layer Details -->
-              <div class="layer-detail-window hidden" id="panel-layer-sustainability">
+              <!-- SUB-WINDOW 2: Box 2 — Demand Sensing & Forecasting (The Visual That Matters Most) -->
+              <div class="layer-detail-window hidden" id="panel-layer-box2">
                 <div class="layer-window-header">
-                  <button class="layer-window-back btn-back-to-overview">← Back to Feeds</button>
-                  <span class="layer-window-chip">🌿 Layer 01 Active</span>
+                  <span class="layer-window-chip" style="background:#EFF6FF; color:#1D4ED8; border-color:#BFDBFE;">📊 Box 02 Active · Divergence Lens</span>
+                  <span style="font-size: 0.65rem; font-family: var(--mono); color: #DC2626; font-weight: 600;">Deviation from Baseline</span>
                 </div>
 
+                <!-- Visual Explanation Banner -->
+                <div class="preset-rationale-banner" style="border-left-color: #2563EB; background: #F0F7FF;">
+                  <strong>Divergence Map Active:</strong> Districts coloured by deviation from their own historical normal. <span style="color:#DC2626; font-weight:700;">Red</span> where acreage is materially below baseline, <span style="color:#2563EB; font-weight:700;">Blue</span> where above.
+                </div>
+
+                <!-- District Acreage vs Baseline with Confidence Band -->
                 <div class="layer-window-card">
-                  <div class="layer-window-card-title">Methane &amp; Emissions Discrepancy</div>
-                  <div style="font-size: 0.82rem; color: var(--text-primary); line-height: 1.4;">
-                    Statutory disclosure cap: <strong id="sus-detail-declared">0.05%</strong><br>
-                    Observed Sentinel-5P column: <strong id="sus-detail-observed" style="color: #DC2626;">+0.84% (18.6 ppb)</strong>
-                  </div>
-                  <div class="layer-metric-grid">
-                    <div class="layer-metric-box">
-                      <div class="layer-metric-box-sub">Variance Delta</div>
-                      <div class="layer-metric-box-val" id="sus-metric-delta" style="color: #DC2626;">+18.4%</div>
+                  <div class="layer-window-card-title">District Acreage vs 5-Year Baseline</div>
+                  <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                    <div style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); font-family: var(--mono);" id="b2-district-acreage">
+                      194,200 ha
                     </div>
-                    <div class="layer-metric-box">
-                      <div class="layer-metric-box-sub">Sensor Sensor SNR</div>
-                      <div class="layer-metric-box-val">0.96 / QA &gt; 0.5</div>
+                    <div style="font-size: 0.82rem; font-weight: 700; color: #DC2626; font-family: var(--mono);" id="b2-baseline-delta">
+                      -8.4% vs Baseline
+                    </div>
+                  </div>
+                  <div style="font-size: 0.68rem; color: var(--text-secondary); margin-top: 3px;" id="b2-ci-band">
+                    95% Confidence Band: [186,000 ha – 202,000 ha]
+                  </div>
+                </div>
+
+                <!-- Crop Mix Shift -->
+                <div class="layer-window-card">
+                  <div class="layer-window-card-title">Crop Mix Shift (This Season vs Prior)</div>
+                  <div class="crop-mix-row">
+                    <div class="crop-mix-pill">
+                      <div style="color: var(--text-secondary); font-size: 0.64rem;">Paddy</div>
+                      <div class="crop-mix-pill-val" id="b2-mix-paddy">68%</div>
+                      <div class="crop-mix-pill-shift" style="color: #DC2626;" id="b2-mix-paddy-shift">-6% Shift</div>
+                    </div>
+                    <div class="crop-mix-pill">
+                      <div style="color: var(--text-secondary); font-size: 0.64rem;">Cotton / Maize</div>
+                      <div class="crop-mix-pill-val" id="b2-mix-cotton">22%</div>
+                      <div class="crop-mix-pill-shift" style="color: #059669;" id="b2-mix-cotton-shift">+4% Shift</div>
+                    </div>
+                    <div class="crop-mix-pill">
+                      <div style="color: var(--text-secondary); font-size: 0.64rem;">Pulses</div>
+                      <div class="crop-mix-pill-val" id="b2-mix-pulses">10%</div>
+                      <div class="crop-mix-pill-shift" style="color: #059669;" id="b2-mix-pulses-shift">+2% Shift</div>
                     </div>
                   </div>
                 </div>
 
-                <div class="layer-window-card">
-                  <div class="layer-window-card-title">Atmospheric Transport (ERA5)</div>
-                  <div style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.35;" id="sus-detail-transport">
-                    Local wind vector: <strong>4.2 m/s @ 250° WSW</strong>. Plume drift trajectory aligns with industrial flare zone.
+                <!-- The Explanatory Ceiling Statement -->
+                <div class="ceiling-callout">
+                  <strong>Explanatory Ceiling:</strong> External agronomic signal explains <strong id="b2-ceiling-pct">34.2%</strong> of historical forecast error (placeholder calibrated for client backtest).
+                </div>
+
+                <!-- The Honest Element: Commercial Variables Not Observed -->
+                <div class="commercial-unobserved-box">
+                  <div class="commercial-unobserved-header">
+                    <span>🔒 Commercial Variables Not Observed</span>
+                  </div>
+                  <div class="commercial-pill-list">
+                    <span class="commercial-pill">Channel Inventory</span>
+                    <span class="commercial-pill">Credit Terms</span>
+                    <span class="commercial-pill">Promotional Calendar</span>
+                  </div>
+                  <div class="commercial-note-ask">
+                    These commercial variables are yours. Ingesting client internal sales and channel terms raises the explanatory ceiling.
                   </div>
                 </div>
 
-                <div class="layer-window-card">
-                  <div class="layer-window-card-title">Reconciliation Protocol</div>
-                  <div style="font-size: 0.76rem; color: var(--text-secondary);">
-                    • Statutory filing divergence flagged for operator sign-off.<br>
-                    • Recommend targeted optical gas imaging (OGI) drone pass.
-                  </div>
+                <!-- Active Layers Checklist -->
+                <div style="font-size: 0.68rem; font-family: var(--mono); color: var(--text-secondary); border-top: 1px solid var(--border-color); padding-top: 6px;">
+                  <strong style="color: var(--text-primary);">Layers On:</strong> Acreage vs multi-year baseline • Crop mix shift • Vegetation stress anomaly • Weather (ERA5/IMD) • Pest favourability <em style="color:#B45309;">(labelled as favourability, never detection)</em>
                 </div>
               </div>
 
-              <!-- SUB-WINDOW 2: Operations Layer Details -->
-              <div class="layer-detail-window hidden" id="panel-layer-operations">
+              <!-- SUB-WINDOW 3: Box 3 — Collection & Credit Planning (Ranking Over Measurement) -->
+              <div class="layer-detail-window hidden" id="panel-layer-box3">
                 <div class="layer-window-header">
-                  <button class="layer-window-back btn-back-to-overview">← Back to Feeds</button>
-                  <span class="layer-window-chip" style="background:#FFFBEB; color:#B45309; border-color:#FDE68A;">🔥 Layer 02 Active</span>
+                  <span class="layer-window-chip" style="background:#FEF3C7; color:#92400E; border-color:#FDE68A;">🌾 Box 03 Active · Risk &amp; Mandi</span>
+                  <span style="font-size: 0.65rem; font-family: var(--mono); color: #B45309; font-weight: 600;">Ranking, Not Measurement</span>
                 </div>
 
+                <!-- Argument Made Visual Banner -->
+                <div class="preset-rationale-banner" style="border-left-color: #D97706; background: #FFFBEB;">
+                  <strong>Ranking Over Measurement:</strong> Dealers coloured by composite stress rank, not by yield — the whole argument made visual.
+                </div>
+
+                <!-- Composite Stress Ranking & Production Anomaly -->
                 <div class="layer-window-card">
-                  <div class="layer-window-card-title">Gas Flaring &amp; Radiative Power</div>
-                  <div style="font-size: 0.82rem; color: var(--text-primary); line-height: 1.4;">
-                    VIIRS Nightfire volume: <strong id="ops-detail-vol" style="color: #D97706;">0.024 BCM/yr</strong><br>
-                    Combustion State: <strong id="ops-detail-combustion">Unlit Flaring / Bypass</strong>
-                  </div>
+                  <div class="layer-window-card-title">Composite Stress Rank &amp; Biomass Anomaly</div>
                   <div class="layer-metric-grid">
                     <div class="layer-metric-box">
-                      <div class="layer-metric-box-sub">Radiative MW</div>
-                      <div class="layer-metric-box-val" id="ops-metric-mw">18.2 MW</div>
+                      <div class="layer-metric-box-sub">Composite Stress</div>
+                      <div class="layer-metric-box-val" id="b3-stress-rank" style="color: #D97706;">
+                        Rank 2 / 5
+                      </div>
+                      <div style="font-size: 0.62rem; color: var(--text-secondary);">Moderate-High Scrutiny</div>
                     </div>
                     <div class="layer-metric-box">
-                      <div class="layer-metric-box-sub">Combustion Eff.</div>
-                      <div class="layer-metric-box-val" id="ops-metric-eff" style="color: #DC2626;">87.4%</div>
+                      <div class="layer-metric-box-sub">Production Anomaly</div>
+                      <div class="layer-metric-box-val" id="b3-prod-anomaly" style="color: #DC2626;">
+                        -4.8%
+                      </div>
+                      <div style="font-size: 0.62rem; color: var(--text-secondary);">vs Own Historical Baseline</div>
                     </div>
                   </div>
                 </div>
 
+                <!-- Harvest Window & Mandi Trend -->
                 <div class="layer-window-card">
-                  <div class="layer-window-card-title">Planet Optical Cross-Check</div>
-                  <div style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.35;">
-                    PlanetScope 3m high-resolution imagery confirms unannounced daytime flare ignition and smoke opacity divergence.
+                  <div class="layer-window-card-title">Harvest Window &amp; Mandi Arrivals</div>
+                  <div style="font-size: 0.78rem; color: var(--text-primary); line-height: 1.4;">
+                    Estimated Harvest Window: <strong id="b3-harvest-window" style="color: #0284C7;">Oct 08 – Oct 22</strong><br>
+                    Catchment Concentration: <strong id="b3-crop-concentration">HHI 0.82 (High Monoculture Risk)</strong><br>
+                    Mandi Price Ticker (Agmarknet): <strong id="b3-mandi-price" style="color: #059669;">₹2,380 / quintal (+5.1% DoD)</strong>
                   </div>
                 </div>
 
-                <div class="layer-window-card">
-                  <div class="layer-window-card-title">Operational Value Lost</div>
-                  <div style="font-size: 0.76rem; color: var(--text-secondary);">
-                    Estimated unrecovered gas value: <strong>$1.84M USD/yr</strong> based on regional Henry Hub / LNG benchmark index.
+                <!-- THE SINGLE MOST IMPORTANT INTERACTION: Disabled Absolute Yield -->
+                <div class="disabled-yield-item" title="Click or hover to view calibration rationale">
+                  <div class="disabled-yield-header">
+                    <span class="disabled-yield-title">
+                      <span>🔒</span>
+                      <span>Absolute Yield (t/ha)</span>
+                    </span>
+                    <span class="disabled-yield-badge">DELIBERATELY DISABLED</span>
                   </div>
-                </div>
-              </div>
-
-              <!-- SUB-WINDOW 3: Asset Security Layer Details -->
-              <div class="layer-detail-window hidden" id="panel-layer-security">
-                <div class="layer-window-header">
-                  <button class="layer-window-back btn-back-to-overview">← Back to Feeds</button>
-                  <span class="layer-window-chip" style="background:#EFF6FF; color:#1D4ED8; border-color:#BFDBFE;">🛡️ Layer 03 Active</span>
-                </div>
-
-                <div class="layer-window-card">
-                  <div class="layer-window-card-title">SAR &amp; Surface Footprint Integrity</div>
-                  <div style="font-size: 0.82rem; color: var(--text-primary); line-height: 1.4;">
-                    Sentinel-1 Coherence: <strong id="sec-detail-sar" style="color: #2563EB;">0.97 (Coherent)</strong><br>
-                    Perimeter Boundary: <strong>Permitted Zone Verified</strong>
-                  </div>
-                  <div class="layer-metric-grid">
-                    <div class="layer-metric-box">
-                      <div class="layer-metric-box-sub">SAR Backscatter</div>
-                      <div class="layer-metric-box-val">VV / VH Polar</div>
-                    </div>
-                    <div class="layer-metric-box">
-                      <div class="layer-metric-box-sub">Surface Change</div>
-                      <div class="layer-metric-box-val" style="color: #047857;">&lt; 0.4% Delta</div>
-                    </div>
+                  <div class="disabled-yield-tooltip">
+                    <strong>Calibration Rationale:</strong> Absolute satellite yield forecasting without ground-truth calibration introduces false precision. Alythia provides relative rank and production anomaly vs baseline.
                   </div>
                 </div>
 
-                <div class="layer-window-card">
-                  <div class="layer-window-card-title">Optical &amp; SAR Change Detection</div>
-                  <div style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.35;">
-                    Multi-temporal SAR interferometry shows zero ground subsidence or unpermitted structural expansion beyond leasehold.
-                  </div>
-                </div>
-
-                <div class="layer-window-card">
-                  <div class="layer-window-card-title">Maritime / Dark Vessel Watch</div>
-                  <div style="font-size: 0.76rem; color: var(--text-secondary);">
-                    Synthetic Aperture Radar scan confirms zero slick damping or untracked vessel berths in offshore mooring zone.
-                  </div>
+                <!-- Active Layers Checklist -->
+                <div style="font-size: 0.68rem; font-family: var(--mono); color: var(--text-secondary); border-top: 1px solid var(--border-color); padding-top: 6px;">
+                  <strong style="color: var(--text-primary);">Layers On:</strong> Harvest date detection • Relative production anomaly • Dealer catchment crop concentration • Mandi price &amp; arrivals • <span style="text-decoration:line-through; color:#9CA3AF;">Absolute Yield (Disabled)</span>
                 </div>
               </div>
             </aside>
 
-            <!-- AREA 3: CENTER MIDDLE COLUMN (Interactive India Map with Planet Connection) -->
+            <!-- AREA 3: CENTER MIDDLE COLUMN (Interactive Agri-Spatial Map Lens) -->
             <main class="divergence-col divergence-col-middle" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
               <div class="col-head" style="padding: 1rem 1.25rem 0.75rem; border-bottom: 1px solid var(--border-color); margin: 0;">
                 <span class="col-num">02</span>
                 <div class="col-head-flex">
                   <div>
-                    <h2 class="col-title">Discrepancy Matrix & Planet Map (India)</h2>
-                    <p class="col-sub">PlanetScope 3m satellite imagery + TROPOMI discrepancy overlay</p>
+                    <h2 class="col-title" id="map-lens-title">Agri-Spatial Map &amp; Sowing Front Lens</h2>
+                    <p class="col-sub" id="map-lens-sub">Coloured by current crop stage · Depots overlaid · Scrubber drives sowing sweep</p>
                   </div>
-                  <div class="planet-active-chip">
+                  <div class="planet-active-chip" id="map-active-badge">
                     <span class="pulse-dot"></span>
-                    <span>Planet Feed Connected</span>
+                    <span id="map-active-badge-text">Stage Phenology Active</span>
                   </div>
                 </div>
               </div>
@@ -1067,118 +1079,120 @@
                 <div id="divergence-map" style="width: 100%; height: 100%; background: #0b101b; z-index: 1;"></div>
                 
                 <!-- Floating Map Badge Overlay -->
-                <div class="divergence-map-badge">
+                <div class="divergence-map-badge" id="divergence-map-lens-indicator">
                   <span class="map-badge-icon">🛰️</span>
-                  <span><strong>PlanetScope 3m</strong> Constellation Overpass: <strong>India Region</strong></span>
+                  <span id="map-badge-text"><strong>Sentinel-1/2 SAR Fusion</strong> · Kharif 2026 Season Coverage</span>
                 </div>
 
                 <!-- Floating Coordinates Overlay -->
                 <div class="divergence-coords-badge" id="divergence-coords-hud">
-                  <span>LAT: <strong id="divergence-lat">21.7679° N</strong></span>
-                  <span>LNG: <strong id="divergence-lng">78.8718° E</strong></span>
-                  <span class="badge-sub">INDIA CENTER</span>
+                  <span>LAT: <strong id="divergence-lat">29.6857° N</strong></span>
+                  <span>LNG: <strong id="divergence-lng">76.9907° E</strong></span>
+                  <span class="badge-sub" id="divergence-region-tag">HARYANA AGRO-BELT</span>
                 </div>
               </div>
 
-              <!-- Map Footer Legend -->
-              <div class="matrix-legend-strip" style="padding: 0.6rem 1rem; background: var(--surface); border-top: 1px solid var(--border-color);">
-                <div class="legend-item"><span class="legend-swatch planet"></span> Planet 3m Satellite</div>
-                <div class="legend-item"><span class="legend-swatch baseline"></span> Declared Operator Target</div>
-                <div class="legend-item"><span class="legend-swatch divergence"></span> Divergence Delta Hotspot</div>
+              <!-- Map Footer Dynamic Legend -->
+              <div class="matrix-legend-strip" id="matrix-legend-strip" style="padding: 0.6rem 1rem; background: var(--surface); border-top: 1px solid var(--border-color);">
+                <div class="legend-item"><span class="legend-swatch" style="background:#10B981;"></span> Sowing / Vegetative</div>
+                <div class="legend-item"><span class="legend-swatch" style="background:#059669;"></span> Active Tillering Peak</div>
+                <div class="legend-item"><span class="legend-swatch" style="background:#0284C7;"></span> Heading / Flowering</div>
+                <div class="legend-item"><span class="legend-swatch" style="background:#D97706; border-radius:50%;"></span> Depot &amp; Dealer Hub</div>
               </div>
             </main>
 
-            <!-- AREA 4: CENTER RIGHT COLUMN (Analytics & Severity Scoring) -->
+            <!-- AREA 4: CENTER RIGHT COLUMN (Decision Analytics & Prescriptive Scoring) -->
             <aside class="divergence-col divergence-col-right">
               <div class="col-head">
                 <span class="col-num">03</span>
                 <div>
-                  <h2 class="col-title">Variance Scoring & Assessment</h2>
-                  <p class="col-sub">Statistical confidence & divergence index</p>
+                  <h2 class="col-title" id="rcol-title">Placement &amp; Decision Score</h2>
+                  <p class="col-sub" id="rcol-sub">Operational recommendation &amp; risk calibration</p>
                 </div>
               </div>
 
               <!-- Overall Divergence Gauge Card -->
               <div class="divergence-score-card">
-                <span class="score-label">OVERALL DIVERGENCE INDEX (ODI)</span>
+                <span class="score-label" id="rcol-metric-label">PLACEMENT READINESS INDEX</span>
                 <div class="score-value-row">
-                  <span class="score-number">+14.2%</span>
-                  <span class="score-badge badge-warning">Elevated Delta</span>
+                  <span class="score-number" id="rcol-metric-number">92.4%</span>
+                  <span class="score-badge badge-success" id="rcol-metric-badge">Optimal Stocking</span>
                 </div>
-                <p class="score-narrative">Observed satellite column concentration significantly exceeds declared baseline flaring parameters.</p>
+                <p class="score-narrative" id="rcol-narrative">Sowing front progression indicates peak tillering window opening in 12 days. Catchment capacity warrants immediate SKU placement.</p>
                 
                 <div class="confidence-bar-wrap">
                   <div class="confidence-label-row">
-                    <span>Sensor Confidence</span>
-                    <span class="conf-pct">94.8%</span>
+                    <span>Classification Confidence</span>
+                    <span class="conf-pct" id="rcol-conf-pct">96.8%</span>
                   </div>
                   <div class="confidence-bar-track">
-                    <div class="confidence-bar-fill" style="width: 94.8%;"></div>
+                    <div class="confidence-bar-fill" id="rcol-conf-fill" style="width: 96.8%;"></div>
                   </div>
                 </div>
               </div>
 
               <!-- Variance Breakdown Table -->
               <div class="variance-breakdown">
-                <h3 class="breakdown-title">Variance Decomposition</h3>
+                <h3 class="breakdown-title" id="rcol-breakdown-title">Telemetry Signal Decomposition</h3>
                 <div class="variance-item">
-                  <span class="var-name">Methane Enhancements (CH₄)</span>
-                  <span class="var-val text-alert">+0.624% (12.2 ppb)</span>
+                  <span class="var-name" id="rcol-var1-name">Phenology Stage Progress</span>
+                  <span class="var-val text-success" id="rcol-var1-val">Tillering Peak (Day 38)</span>
                 </div>
                 <div class="variance-item">
-                  <span class="var-name">Combustion Flaring Gap</span>
-                  <span class="var-val text-warning">+0.0093 BCM/yr</span>
+                  <span class="var-name" id="rcol-var2-name">Soil Moisture (0–7cm ERA5/SAR)</span>
+                  <span class="var-val" id="rcol-var2-val" style="color:#0284C7;">32.4% (Adequate)</span>
                 </div>
                 <div class="variance-item">
-                  <span class="var-name">Atmospheric Wind Vector (ERA5)</span>
-                  <span class="var-val">3.4 m/s @ 242° WSW</span>
+                  <span class="var-name" id="rcol-var3-name">Monsoon Wind &amp; Precip (IMD)</span>
+                  <span class="var-val" id="rcol-var3-val">4.2 m/s · +4.2% LPA Normal</span>
                 </div>
                 <div class="variance-item">
-                  <span class="var-name">Combustion Inefficiency Index</span>
-                  <span class="var-val text-alert">High (Unlit Flaring Likely)</span>
+                  <span class="var-name" id="rcol-var4-name">Pest Favourability Index</span>
+                  <span class="var-val" id="rcol-var4-val" style="color:#D97706;">Low-Medium (28/100)</span>
                 </div>
               </div>
 
-              <!-- Actionable Guidance -->
+              <!-- Actionable Guidance Protocol -->
               <div class="divergence-recommendations">
-                <h3 class="breakdown-title">Tactical Action Protocol</h3>
-                <ul class="rec-list">
-                  <li>Deploy drone optical gas imaging (OGI) over Flare Stack #2.</li>
-                  <li>Cross-verify operator supervisory control logs for May 2026.</li>
-                  <li>Export flagged divergence packet to compliance audit.</li>
+                <h3 class="breakdown-title">Prescriptive Action Protocol</h3>
+                <ul class="rec-list" id="rcol-rec-list">
+                  <li>Dispatch SKU batch #KRN-48 to Karnal Depot within 8 days.</li>
+                  <li>Prioritize early tillering micro-catchments in western sub-district.</li>
+                  <li>Review 7-day soil moisture forecast before final shipment dispatch.</li>
                 </ul>
               </div>
             </aside>
 
           </div>
 
-          <!-- AREA 5: BOTTOM (Spanning full width left to right) -->
+          <!-- AREA 5: BOTTOM (Kharif Season Sowing Front Scrubber) -->
           <footer class="divergence-area-bottom">
             <div class="divergence-bottom-inner">
               <div class="bottom-left-info">
-                <span class="bot-label">TELEMETRY PROVENANCE:</span>
+                <span class="bot-label">ENGINE INGEST:</span>
                 <span class="bot-tags">
-                  <span class="bot-tag">TROPOMI S5P</span>
-                  <span class="bot-tag">VIIRS VNP46A2</span>
                   <span class="bot-tag">SENTINEL-1 SAR</span>
+                  <span class="bot-tag">SENTINEL-2 MSI</span>
                   <span class="bot-tag">ERA5 METEOROLOGY</span>
+                  <span class="bot-tag">IMD GRIDDED</span>
                 </span>
               </div>
 
               <div class="bottom-center-timeline">
-                <span class="timeline-label">Temporal Window:</span>
-                <div class="timeline-ticks">
-                  <button class="tick-btn">2025-05</button>
-                  <button class="tick-btn">2025-08</button>
-                  <button class="tick-btn">2025-11</button>
-                  <button class="tick-btn">2026-02</button>
-                  <button class="tick-btn active">2026-05 (Latest)</button>
+                <span class="timeline-label">Kharif Sowing Front Scrubber:</span>
+                <div class="timeline-ticks" id="timeline-scrubber-ticks">
+                  <button class="tick-btn" data-sweep="0">Jun 01 (East Start)</button>
+                  <button class="tick-btn" data-sweep="1">Jun 15 (Gangetic)</button>
+                  <button class="tick-btn active" data-sweep="2">Jul 01 (Northwest Peak)</button>
+                  <button class="tick-btn" data-sweep="3">Jul 15 (Tillering)</button>
+                  <button class="tick-btn" data-sweep="4">Aug 01 (Heading)</button>
+                  <button class="tick-btn" data-sweep="5">Aug 15 (Maturity)</button>
                 </div>
               </div>
 
               <div class="bottom-right-actions">
                 <button class="primary-btn outline small" id="btn-export-divergence">Export Dossier (PDF)</button>
-                <button class="primary-btn small" id="btn-sync-registry">Sync Registry</button>
+                <button class="primary-btn small" id="btn-sync-registry">Sync AgriStack</button>
               </div>
             </div>
           </footer>
