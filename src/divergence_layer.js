@@ -16,402 +16,168 @@ let depotMarkersLayer = null;
 let activePreset = 'box1'; // 'box1', 'box2', or 'box3'
 let currentSweepStep = 2; // Scrubber index (0 to 5)
 
-// Indian Agricultural Catchments Dataset across Kharif Paddy & Commodity Belts
+// Indian Agricultural Comparison Regions for Divergence Layer Demo
 const agroCatchmentData = {
-  karnal: {
-    key: 'karnal',
-    name: "Karnal Depot (Haryana) — Basmati Belt",
-    depotName: "Karnal Central Depot (Haryana)",
-    center: [29.6857, 76.9907],
-    zoom: 10,
-    regionTag: "HARYANA BASMATI BELT",
-    bounds: [[29.45, 76.75], [29.90, 77.25]],
+  cauvery_delta: {
+    key: 'cauvery_delta',
+    name: "Cauvery Delta (Tamil Nadu) — Paddy Rice Bowl",
+    depotName: "Thanjavur Central Depot (Cauvery Delta)",
+    center: [10.7870, 79.1378],
+    zoom: 9,
+    regionTag: "TAMIL NADU CAUVERY DELTA",
+    bounds: [[10.45, 78.85], [11.15, 79.85]],
     
-    // Box 1: Distribution & Inventory Positioning
+    // Box 1: Distribution & Inventory Positioning (The Pilot)
     b1: {
-      catchmentAcreage: "68,400 ha",
-      sowingP25: "Jun 14",
-      sowingMedian: "Jun 26",
-      sowingP75: "Jul 08",
-      appWindow: "Jul 16 – Jul 26",
+      catchmentAcreage: "94,600 ha",
+      sowingP25: "Jul 04",
+      sowingMedian: "Jul 18",
+      sowingP75: "Aug 02",
+      appWindow: "Aug 04 – Aug 16",
       tolerance: "±3 days",
-      leadTime: "12 Days",
+      leadTime: "14 Days",
       leadPriority: "High Stocking Priority",
       stage: "Active Tillering Peak",
       stageColor: "#059669",
-      soilMoisture: "32.4% (Adequate)",
-      readinessScore: "92.4%",
+      soilMoisture: "36.8% (Mettur Canal Active)",
+      readinessScore: "94.2%",
       readinessBadge: "Optimal Stocking",
       badgeClass: "badge-success",
-      narrative: "Sowing front progression indicates peak tillering window opening in 12 days. Catchment capacity warrants immediate SKU placement.",
+      narrative: "Mettur reservoir canal releases have stabilized Kuruvai/Samba paddy transplantation. Catchment enters peak tillering with 14 days lead time.",
+      confidence: "97.6%",
+      recList: [
+        "Dispatch SKU batch #TN-CAU-90 to Thanjavur and Tiruvarur railheads within 6 days.",
+        "Target micro-catchments in Grand Anicut canal branch for tillering nutrients.",
+        "Review 7-day Northeast monsoon onset forecast before final batch transit."
+      ]
+    },
+
+    // Box 2: Demand Sensing & Forecasting (Acreage Expansion — Blue Visual)
+    b2: {
+      districtAcreage: "248,000 ha",
+      baselineDelta: "+8.2% vs Baseline",
+      baselineDeltaNum: 8.2,
+      ciBand: "95% Confidence Band: [238,000 ha – 258,000 ha]",
+      mixPaddy: "84%",
+      mixPaddyShift: "+5% Shift",
+      mixCotton: "11%",
+      mixCottonShift: "-3% Shift (Pulses)",
+      mixPulses: "5%",
+      mixPulsesShift: "-2% Shift (Sugarcane)",
+      ceilingPct: "38.6%",
+      stressAnomaly: "+0.52σ (Reservoir Surplus)",
+      divergenceScore: "+8.2%",
+      divergenceBadge: "Acreage Expansion",
+      badgeClass: "badge-success",
+      narrative: "Acreage expansion (+8.2% above 5-year baseline) driven by timely water release from Cauvery basin reservoirs and favorable sowing moisture.",
       confidence: "96.8%",
       recList: [
-        "Dispatch SKU batch #KRN-48 to Karnal Depot within 8 days.",
-        "Prioritize early tillering micro-catchments in western sub-district.",
-        "Review 7-day soil moisture forecast before final shipment dispatch."
+        "Increase regional demand allocation by +8.2% across delta retail touchpoints.",
+        "Expand crop protection portfolio for blast and leaf folder resistance.",
+        "Ingest distributor channel inventory and settlement terms to raise ceiling."
       ]
     },
 
-    // Box 2: Demand Sensing & Forecasting
-    b2: {
-      districtAcreage: "194,200 ha",
-      baselineDelta: "-8.4% vs Baseline",
-      baselineDeltaNum: -8.4,
-      ciBand: "95% Confidence Band: [186,000 ha – 202,000 ha]",
-      mixPaddy: "68%",
-      mixPaddyShift: "-6% Shift",
-      mixCotton: "22%",
-      mixCottonShift: "+4% Shift",
-      mixPulses: "10%",
-      mixPulsesShift: "+2% Shift",
-      ceilingPct: "34.2%",
-      stressAnomaly: "-0.42σ (Moderate Anomaly)",
-      divergenceScore: "-8.4%",
-      divergenceBadge: "Deficit Variance",
-      badgeClass: "badge-warning",
-      narrative: "District acreage displays an 8.4% deficit below 5-year historical normal due to delayed monsoon onset in western blocks.",
-      confidence: "94.2%",
-      recList: [
-        "Adjust regional channel supply forecast down by -8.4% to prevent inventory glut.",
-        "Reallocate surplus buffer stock towards Guntur cluster (+12.4% expansion).",
-        "Ingest distributor sell-through and credit terms to raise explanatory ceiling."
-      ]
-    },
-
-    // Box 3: Collection & Credit Planning
-    b3: {
-      stressRank: "Rank 2 / 5",
-      stressRankNum: 2,
-      stressRankLabel: "Moderate-High Scrutiny",
-      prodAnomaly: "-4.8% Relative Biomass Anomaly",
-      harvestWindow: "Oct 08 – Oct 22",
-      cropConcentration: "HHI 0.82 (High Monoculture Risk)",
-      mandiPrice: "₹2,380 / quintal (+5.1% WoW)",
-      creditScore: "Rank 2 / 5",
-      creditBadge: "Elevated Scrutiny",
-      badgeClass: "badge-warning",
-      narrative: "High monoculture concentration and early moisture stress position Karnal catchment under Rank 2 credit scrutiny.",
-      confidence: "93.5%",
-      recList: [
-        "Flag Rank 2 dealer catchments for tightened 30-day credit settlement terms.",
-        "Align collection milestones with peak mandi arrivals beginning Oct 12.",
-        "Track Agmarknet arrival price floor to verify farmer cash liquidity."
-      ]
-    }
-  },
-
-  ludhiana: {
-    key: 'ludhiana',
-    name: "Ludhiana Central Depot (Punjab) — Kharif Paddy",
-    depotName: "Ludhiana Central Hub (Punjab)",
-    center: [30.9010, 75.8573],
-    zoom: 10,
-    regionTag: "PUNJAB PADDY BELT",
-    bounds: [[30.70, 75.60], [31.10, 76.10]],
-    
-    b1: {
-      catchmentAcreage: "84,200 ha",
-      sowingP25: "Jun 18",
-      sowingMedian: "Jun 30",
-      sowingP75: "Jul 12",
-      appWindow: "Jul 20 – Jul 30",
-      tolerance: "±4 days",
-      leadTime: "16 Days",
-      leadPriority: "Medium-High Priority",
-      stage: "Early Tillering",
-      stageColor: "#10B981",
-      soilMoisture: "35.1% (High Irrigation)",
-      readinessScore: "95.1%",
-      readinessBadge: "Stage Aligned",
-      badgeClass: "badge-success",
-      narrative: "Canal irrigation resilience keeps Punjab sowing front aligned with planned dealer delivery windows.",
-      confidence: "98.1%",
-      recList: [
-        "Initiate phased transit of herbicide and nutrient SKUs to Ludhiana railhead.",
-        "Coordinate with primary cooperative dealers across Jagraon and Khanna.",
-        "Track Sentinel-1 SAR flood coherence in low-lying riparian zones."
-      ]
-    },
-
-    b2: {
-      districtAcreage: "242,000 ha",
-      baselineDelta: "-4.2% vs Baseline",
-      baselineDeltaNum: -4.2,
-      ciBand: "95% Confidence Band: [234,000 ha – 250,000 ha]",
-      mixPaddy: "82%",
-      mixPaddyShift: "-2% Shift",
-      mixCotton: "12%",
-      mixCottonShift: "+1% Shift",
-      mixPulses: "6%",
-      mixPulsesShift: "+1% Shift",
-      ceilingPct: "37.8%",
-      stressAnomaly: "-0.18σ (Near Baseline)",
-      divergenceScore: "-4.2%",
-      divergenceBadge: "Stable Baseline",
-      badgeClass: "badge-success",
-      narrative: "Paddy acreage holds steady against baseline with slight diversification towards maize in peripheral blocks.",
-      confidence: "96.4%",
-      recList: [
-        "Maintain baseline distribution volume across Tier-1 distributor channels.",
-        "Target specialized nutrient packs to emerging maize clusters (+1%).",
-        "Monitor tubewell electricity load hours as auxiliary vigor signal."
-      ]
-    },
-
+    // Box 3: Collection & Credit Planning (Strong Liquidity / Low Risk)
     b3: {
       stressRank: "Rank 4 / 5",
       stressRankNum: 4,
       stressRankLabel: "Strong Liquidity",
-      prodAnomaly: "+1.2% Normal Biomass",
-      harvestWindow: "Oct 14 – Oct 28",
-      cropConcentration: "HHI 0.88 (Heavy Paddy Specialization)",
-      mandiPrice: "₹2,420 / quintal (+3.8% WoW)",
+      prodAnomaly: "+3.4% Relative Biomass Surge",
+      harvestWindow: "Nov 12 – Nov 28",
+      cropConcentration: "HHI 0.86 (High Paddy Monoculture)",
+      mandiPrice: "₹2,480 / quintal (+4.6% WoW)",
       creditScore: "Rank 4 / 5",
-      creditBadge: "Low Risk",
+      creditBadge: "Low Credit Risk",
       badgeClass: "badge-success",
-      narrative: "Assured procurement infrastructure and stable biomass indices support robust credit repayment confidence.",
-      confidence: "95.8%",
+      narrative: "Assured canal irrigation and high vegetative biomass indices support strong credit solvency across Thanjavur and Nagapattinam dealers.",
+      confidence: "97.2%",
       recList: [
-        "Offer standard 60-day commercial terms to accredited Ludhiana dealer tier.",
-        "Set post-harvest collection reconciliation starting Oct 24.",
-        "Track MSP mandi arrival volumes across Ludhiana grain markets."
+        "Authorize standard 60-day commercial terms to accredited Cauvery dealer tier.",
+        "Set post-harvest collection reconciliation starting Nov 20.",
+        "Track direct procurement center (DPC) paddy arrival volumes across Tamil Nadu mandis."
       ]
     }
   },
 
-  guntur: {
-    key: 'guntur',
-    name: "Guntur Agro-Cluster (Andhra Pradesh) — Heading",
-    depotName: "Guntur Agro-Hub (Andhra Pradesh)",
-    center: [16.3067, 80.4365],
-    zoom: 10,
-    regionTag: "COASTAL ANDHRA DELTA",
-    bounds: [[16.10, 80.20], [16.50, 80.65]],
+  nizamabad_karimnagar: {
+    key: 'nizamabad_karimnagar',
+    name: "Nizamabad–Karimnagar Belt (Telangana) — Deficit Anomaly",
+    depotName: "Nizamabad–Karimnagar Agro Hub (Telangana)",
+    center: [18.7300, 78.6800],
+    zoom: 9,
+    regionTag: "TELANGANA AGRO-CLUSTERS",
+    bounds: [[18.25, 77.90], [19.10, 79.45]],
     
+    // Box 1: Distribution & Inventory Positioning (Urgent Placement)
     b1: {
-      catchmentAcreage: "52,600 ha",
-      sowingP25: "Jun 02",
-      sowingMedian: "Jun 14",
-      sowingP75: "Jun 28",
-      appWindow: "Jul 04 – Jul 14",
-      tolerance: "±3 days",
-      leadTime: "Active / Stocked",
-      leadPriority: "Window Active",
+      catchmentAcreage: "76,200 ha",
+      sowingP25: "Jun 12",
+      sowingMedian: "Jun 25",
+      sowingP75: "Jul 09",
+      appWindow: "Jul 14 – Jul 26",
+      tolerance: "±4 days",
+      leadTime: "6 Days Remaining",
+      leadPriority: "Urgent Placement",
       stage: "Heading / Panicle Initiation",
       stageColor: "#0284C7",
-      soilMoisture: "38.6% (Moist/Surplus)",
-      readinessScore: "97.6%",
-      readinessBadge: "Stocked / Complete",
-      badgeClass: "badge-success",
-      narrative: "Early coastal monsoon sowing has progressed into heading stage. Secondary fungicide application window is active.",
-      confidence: "97.4%",
-      recList: [
-        "Complete secondary placement of panicle-stage bio-stimulants.",
-        "Reallocate unused vegetative stock to northern delayed sowing zones.",
-        "Monitor IMD coastal low-pressure radar for localized inundation."
-      ]
-    },
-
-    b2: {
-      districtAcreage: "162,000 ha",
-      baselineDelta: "+12.4% vs Baseline",
-      baselineDeltaNum: 12.4,
-      ciBand: "95% Confidence Band: [154,000 ha – 170,000 ha]",
-      mixPaddy: "58%",
-      mixPaddyShift: "+6% Shift",
-      mixCotton: "32%",
-      mixCottonShift: "-4% Shift",
-      mixPulses: "10%",
-      mixPulsesShift: "-2% Shift",
-      ceilingPct: "39.4%",
-      stressAnomaly: "+0.64σ (High Vigor Surge)",
-      divergenceScore: "+12.4%",
-      divergenceBadge: "Acreage Expansion",
-      badgeClass: "badge-success",
-      narrative: "Significant acreage expansion (+12.4% over 5-year baseline) driven by abundant reservoir storage in Krishna delta.",
-      confidence: "97.1%",
-      recList: [
-        "Increase regional demand allocation by +12.4% across coastal retail touchpoints.",
-        "Deploy additional field agronomy advisory for crop protection during heading.",
-        "Partner with major fertilizer cooperatives to capture expanded market share."
-      ]
-    },
-
-    b3: {
-      stressRank: "Rank 5 / 5",
-      stressRankNum: 5,
-      stressRankLabel: "Optimal Liquidity",
-      prodAnomaly: "+6.8% Biomass Surge",
-      harvestWindow: "Sep 28 – Oct 12",
-      cropConcentration: "HHI 0.62 (Diversified Chili/Paddy)",
-      mandiPrice: "₹2,510 / quintal (+6.2% DoD)",
-      creditScore: "Rank 5 / 5",
-      creditBadge: "Optimal Solvency",
-      badgeClass: "badge-success",
-      narrative: "Surge in vegetative biomass and early harvest calendar provide highest liquidity and earliest collection cycle in India.",
-      confidence: "98.2%",
-      recList: [
-        "Authorize flexible credit limits for top-performing dealer catchments.",
-        "Schedule first-tier collection repayments starting Oct 02.",
-        "Integrate Agmarknet Guntur chili & paddy daily mandi price indices."
-      ]
-    }
-  },
-
-  muzaffarpur: {
-    key: 'muzaffarpur',
-    name: "Muzaffarpur District (Bihar) — Deficit Anomaly",
-    depotName: "Muzaffarpur Regional Depot (Bihar)",
-    center: [26.1209, 85.3647],
-    zoom: 10,
-    regionTag: "EASTERN GANGETIC PLAIN",
-    bounds: [[25.95, 85.15], [26.30, 85.55]],
-    
-    b1: {
-      catchmentAcreage: "41,200 ha",
-      sowingP25: "May 28",
-      sowingMedian: "Jun 10",
-      sowingP75: "Jun 24",
-      appWindow: "Jun 28 – Jul 08",
-      tolerance: "±4 days",
-      leadTime: "2 Days Remaining",
-      leadPriority: "Urgent Placement",
-      stage: "Vegetative Emergence",
-      stageColor: "#10B981",
-      soilMoisture: "22.8% (Deficit Moisture)",
-      readinessScore: "81.2%",
+      soilMoisture: "27.4% (Groundwater Dependent)",
+      readinessScore: "88.5%",
       readinessBadge: "Urgent Recheck",
       badgeClass: "badge-warning",
-      narrative: "Rainfall deficit in North Bihar has slowed paddy transplantation. Target application windows condensed into 2 days.",
-      confidence: "91.8%",
-      recList: [
-        "Expedite drought-stress foliar spray shipments to Muzaffarpur hub.",
-        "Alert field teams to delayed seedling nursery mortality risk.",
-        "Cross-reference IMD gridded deficit rainfall before extending distributor credit."
-      ]
-    },
-
-    b2: {
-      districtAcreage: "118,000 ha",
-      baselineDelta: "-16.8% vs Baseline",
-      baselineDeltaNum: -16.8,
-      ciBand: "95% Confidence Band: [110,000 ha – 126,000 ha]",
-      mixPaddy: "48%",
-      mixPaddyShift: "-12% Shift",
-      mixCotton: "38%",
-      mixCottonShift: "+8% Shift (Maize)",
-      mixPulses: "14%",
-      mixPulsesShift: "+4% Shift",
-      ceilingPct: "31.6%",
-      stressAnomaly: "-0.86σ (Severe Deficit Anomaly)",
-      divergenceScore: "-16.8%",
-      divergenceBadge: "Critical Deficit",
-      badgeClass: "badge-danger",
-      narrative: "Major crop mix shift: Farmers switched 12% of intended paddy acreage to maize/pulses due to prolonged dry spells.",
-      confidence: "93.4%",
-      recList: [
-        "Cut paddy pesticide shipment quotas by -16.8% to avert major unsold returns.",
-        "Ramp up maize and pulse seed treatments and drought alleviation products.",
-        "Ingest local distributor credit terms to establish commercial recovery plan."
-      ]
-    },
-
-    b3: {
-      stressRank: "Rank 1 / 5",
-      stressRankNum: 1,
-      stressRankLabel: "Critical Stress Risk",
-      prodAnomaly: "-14.2% Severe Deficit",
-      harvestWindow: "Oct 20 – Nov 04",
-      cropConcentration: "HHI 0.54 (Fragmented Mixed Basin)",
-      mandiPrice: "₹2,180 / quintal (-2.4% DoD)",
-      creditScore: "Rank 1 / 5",
-      creditBadge: "High Credit Risk",
-      badgeClass: "badge-danger",
-      narrative: "Severe biomass deficit and depressed mandi arrivals elevate collection default risk across North Bihar dealers.",
-      confidence: "92.0%",
-      recList: [
-        "Place Muzaffarpur and Darbhanga dealer network on Rank 1 strict credit hold.",
-        "Implement collateralized or advance-payment terms for secondary orders.",
-        "Track delayed crop harvest window (Nov 04) for debt restructuring."
-      ]
-    }
-  },
-
-  surat_hazira: {
-    key: 'surat_hazira',
-    name: "Surat / Hazira Basin (Gujarat) — Mixed Crop",
-    depotName: "Surat Central Depot (Gujarat)",
-    center: [21.1702, 72.8311],
-    zoom: 10,
-    regionTag: "GUJARAT AGRO-INDUSTRIAL",
-    bounds: [[21.00, 72.65], [21.35, 73.00]],
-    
-    b1: {
-      catchmentAcreage: "38,900 ha",
-      sowingP25: "Jun 20",
-      sowingMedian: "Jul 02",
-      sowingP75: "Jul 16",
-      appWindow: "Jul 22 – Aug 02",
-      tolerance: "±5 days",
-      leadTime: "18 Days",
-      leadPriority: "Normal Staging",
-      stage: "Early Vegetative",
-      stageColor: "#10B981",
-      soilMoisture: "31.2% (Adequate)",
-      readinessScore: "90.6%",
-      readinessBadge: "Staging Active",
-      badgeClass: "badge-success",
-      narrative: "Sowing across South Gujarat is pacing normally. Canal deliveries from Tapi basin ensure steady vegetative growth.",
-      confidence: "95.6%",
-      recList: [
-        "Stage dual-purpose cotton & paddy crop protection inventory at Surat hub.",
-        "Verify dealer warehouse capacity ahead of early August peak demand.",
-        "Cross-check soil salinity metrics in coastal Hazira buffer parcels."
-      ]
-    },
-
-    b2: {
-      districtAcreage: "146,000 ha",
-      baselineDelta: "-7.1% vs Baseline",
-      baselineDeltaNum: -7.1,
-      ciBand: "95% Confidence Band: [138,000 ha – 154,000 ha]",
-      mixPaddy: "36%",
-      mixPaddyShift: "-4% Shift",
-      mixCotton: "52%",
-      mixCottonShift: "+3% Shift",
-      mixPulses: "12%",
-      mixPulsesShift: "+1% Shift",
-      ceilingPct: "35.1%",
-      stressAnomaly: "-0.32σ (Slight Anomaly)",
-      divergenceScore: "-7.1%",
-      divergenceBadge: "Moderate Deficit",
-      badgeClass: "badge-warning",
-      narrative: "Modest acreage shift towards cotton and sugarcane reflects market price incentives in western Gujarat.",
+      narrative: "Tubewell groundwater dependency and delayed canal lift irrigation have condensed vegetative application windows into 6 days.",
       confidence: "94.8%",
       recList: [
-        "Rebalance portfolio allocation: Reduce paddy SKUs by -4%, expand cotton bollworm packs by +3%.",
-        "Coordinate with Surat sugar cooperative mills for bulk deliveries.",
-        "Ingest client promotional calendar to refine local demand forecast."
+        "Expedite localized heading-stage fungicide shipments to Armoor and Jagtial hubs.",
+        "Alert field teams to unseasonal brown planthopper (BPH) favourability spikes.",
+        "Cross-verify Sriram Sagar Project (SRSP) water level before secondary dispatch."
       ]
     },
 
-    b3: {
-      stressRank: "Rank 3 / 5",
-      stressRankNum: 3,
-      stressRankLabel: "Neutral / Moderate",
-      prodAnomaly: "-2.9% Near Baseline",
-      harvestWindow: "Oct 10 – Oct 24",
-      cropConcentration: "HHI 0.68 (Cotton Dominant)",
-      mandiPrice: "₹2,360 / quintal (+2.9% WoW)",
-      creditScore: "Rank 3 / 5",
-      creditBadge: "Neutral Risk",
-      badgeClass: "badge-warning",
-      narrative: "Diversified industrial economy and mixed cropping balance credit exposure within normal tolerance limits.",
-      confidence: "94.2%",
+    // Box 2: Demand Sensing & Forecasting (Critical Deficit — Red Visual)
+    b2: {
+      districtAcreage: "186,400 ha",
+      baselineDelta: "-11.6% vs Baseline",
+      baselineDeltaNum: -11.6,
+      ciBand: "95% Confidence Band: [178,000 ha – 194,000 ha]",
+      mixPaddy: "52%",
+      mixPaddyShift: "-9% Shift",
+      mixCotton: "34%",
+      mixCottonShift: "+6% Shift",
+      mixPulses: "14%",
+      mixPulsesShift: "+3% Shift (Red Gram)",
+      ceilingPct: "35.4%",
+      stressAnomaly: "-0.68σ (Deficit Anomaly)",
+      divergenceScore: "-11.6%",
+      divergenceBadge: "Critical Deficit",
+      badgeClass: "badge-danger",
+      narrative: "Major crop mix shift: Farmers switched 9% of intended paddy acreage into cotton & red gram due to canal rationing and groundwater power constraints.",
+      confidence: "95.1%",
       recList: [
-        "Maintain standard 45-day dealer settlement cycles across Gujarat network.",
-        "Monitor cotton arrival price trends on Surat and Bharuch APMC mandis.",
-        "Schedule credit audit post-Diwali harvest sales peak."
+        "Cut paddy pesticide shipment quotas by -11.6% to avert major distributor deadstock.",
+        "Ramp up cotton bollworm protection and drought foliar bio-stimulants (+6%).",
+        "Ingest dealer credit limits and promotional schedules to recalibrate forecast."
+      ]
+    },
+
+    // Box 3: Collection & Credit Planning (Elevated Scrutiny)
+    b3: {
+      stressRank: "Rank 2 / 5",
+      stressRankNum: 2,
+      stressRankLabel: "Moderate-High Scrutiny",
+      prodAnomaly: "-6.2% Relative Biomass Anomaly",
+      harvestWindow: "Oct 18 – Nov 02",
+      cropConcentration: "HHI 0.64 (Mixed Cotton/Paddy)",
+      mandiPrice: "₹2,310 / quintal (-1.8% DoD)",
+      creditScore: "Rank 2 / 5",
+      creditBadge: "Elevated Scrutiny",
+      badgeClass: "badge-warning",
+      narrative: "Groundwater drawdown and biomass deficit elevate credit scrutiny across Telangana dealer catchments.",
+      confidence: "93.8%",
+      recList: [
+        "Place Nizamabad and Karimnagar dealer network on Rank 2 tightened 30-day settlement terms.",
+        "Implement collateralized or advance-payment requirements for secondary orders.",
+        "Align debt collection milestones with peak cotton and paddy mandi arrivals in early November."
       ]
     }
   }
@@ -447,8 +213,8 @@ function initDivergenceMap() {
   // Render India Agro-Depot pins & catchment polygons
   renderMapLayers();
 
-  // Show default Karnal catchment
-  updateMapFocus('karnal');
+  // Show default Cauvery Delta catchment
+  updateMapFocus('cauvery_delta');
 
   // Track coordinate HUD on mouse move
   divergenceMap.on('mousemove', (e) => {
@@ -576,7 +342,7 @@ function updateMapFocus(key) {
  * Populates all 3 sub-windows & analytics cards with data from the active catchment
  */
 function populateCatchmentData(key) {
-  const data = agroCatchmentData[key] || agroCatchmentData.karnal;
+  const data = agroCatchmentData[key] || agroCatchmentData.cauvery_delta;
 
   // 1. Sub-Window 1 (Box 1 · Distribution & Inventory Positioning)
   const b1Acreage = document.getElementById('b1-catchment-acreage');
@@ -838,7 +604,7 @@ function switchAgriPreset(presetKey) {
   updateMapLensUI();
 
   const facilitySelect = document.getElementById('divergence-facility-select');
-  const selectedKey = facilitySelect?.value || 'karnal';
+  const selectedKey = facilitySelect?.value || 'cauvery_delta';
   populateCatchmentData(selectedKey);
 }
 
@@ -868,8 +634,8 @@ export function initDivergenceLayer() {
   // Initialize Map
   initDivergenceMap();
 
-  // Initial population with default Karnal catchment
-  populateCatchmentData('karnal');
+  // Initial population with default Cauvery Delta catchment
+  populateCatchmentData('cauvery_delta');
 
   // Preset Box Buttons
   document.getElementById('btn-layer-box1')?.addEventListener('click', () => switchAgriPreset('box1'));
