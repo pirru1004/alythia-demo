@@ -798,94 +798,251 @@
           <div class="divergence-area-center">
             
             <!-- AREA 2: CENTER LEFT COLUMN (Streams & Telemetry) -->
-            <aside class="divergence-col divergence-col-left">
+            <aside class="divergence-col divergence-col-left" id="divergence-col-left">
               <div class="col-head">
                 <span class="col-num">01</span>
                 <div>
-                  <h2 class="col-title">Telemetry Feeds & Disclosures</h2>
+                  <h2 class="col-title">Telemetry Feeds &amp; Disclosures</h2>
                   <p class="col-sub">Multi-sensor inputs vs operator filings</p>
                 </div>
               </div>
 
-              <div class="divergence-stream-list">
-                <!-- Stream 1 -->
-                <div class="stream-card active">
-                  <div class="stream-card-top">
-                    <div class="stream-info">
-                      <span class="stream-type">DISCLOSURE BASELINE</span>
-                      <h3 class="stream-name">Self-Reported Emissions Target</h3>
-                    </div>
-                    <span class="stream-val">0.05% limit</span>
+              <!-- 3 Interactive Layer Selector Boxes at Top -->
+              <div class="divergence-layer-boxes">
+                <!-- Layer Box 1: Sustainability -->
+                <button class="layer-box-btn" data-layer="sustainability" id="btn-layer-sustainability" title="View Sustainability Layer">
+                  <div class="layer-box-top">
+                    <span class="layer-box-icon">🌿</span>
+                    <span class="layer-box-badge">Layer 01</span>
                   </div>
-                  <div class="stream-meta">
-                    <span>Source: Statutory Environmental Return</span>
-                    <span class="stream-status verified">Declared</span>
+                  <div class="layer-box-title">Sustainability</div>
+                  <div class="layer-box-sub">Methane &amp; Filings</div>
+                </button>
+
+                <!-- Layer Box 2: Operational Efficiency -->
+                <button class="layer-box-btn" data-layer="operations" id="btn-layer-operations" title="View Operations Layer">
+                  <div class="layer-box-top">
+                    <span class="layer-box-icon">🔥</span>
+                    <span class="layer-box-badge">Layer 02</span>
+                  </div>
+                  <div class="layer-box-title">Operations</div>
+                  <div class="layer-box-sub">Flaring &amp; Uptime</div>
+                </button>
+
+                <!-- Layer Box 3: Asset Security -->
+                <button class="layer-box-btn" data-layer="security" id="btn-layer-security" title="View Asset Security Layer">
+                  <div class="layer-box-top">
+                    <span class="layer-box-icon">🛡️</span>
+                    <span class="layer-box-badge">Layer 03</span>
+                  </div>
+                  <div class="layer-box-title">Asset Security</div>
+                  <div class="layer-box-sub">Footprint &amp; SAR</div>
+                </button>
+              </div>
+
+              <!-- SUB-WINDOW 0: Default All Feeds Overview -->
+              <div class="divergence-sub-panel active" id="panel-layer-overview">
+                <div class="divergence-stream-list">
+                  <!-- Stream 1 -->
+                  <div class="stream-card active">
+                    <div class="stream-card-top">
+                      <div class="stream-info">
+                        <span class="stream-type">DISCLOSURE BASELINE</span>
+                        <h3 class="stream-name">Self-Reported Emissions Target</h3>
+                      </div>
+                      <span class="stream-val">0.05% limit</span>
+                    </div>
+                    <div class="stream-meta">
+                      <span>Source: Statutory Environmental Return</span>
+                      <span class="stream-status verified">Declared</span>
+                    </div>
+                  </div>
+
+                  <!-- Stream 2: Planet Connection -->
+                  <div class="stream-card active" style="border-left: 3px solid #00F0FF; background: rgba(0, 240, 255, 0.04);">
+                    <div class="stream-card-top">
+                      <div class="stream-info">
+                        <span class="stream-type" style="color: #00F0FF;">PLANET LABS SATELLITE</span>
+                        <h3 class="stream-name">PlanetScope 3m High-Res Feed</h3>
+                      </div>
+                      <span class="stream-val" style="color: #00F0FF;">3.0m Optical</span>
+                    </div>
+                    <div class="stream-meta">
+                      <span>Pass: Daily Revisit (India Coverage)</span>
+                      <span class="stream-status active" style="background: #E0F2FE; color: #0369A1;">Connected</span>
+                    </div>
+                  </div>
+
+                  <!-- Stream 3 -->
+                  <div class="stream-card active">
+                    <div class="stream-card-top">
+                      <div class="stream-info">
+                        <span class="stream-type">SATELLITE SPECTROMETRY</span>
+                        <h3 class="stream-name">Sentinel-5P TROPOMI (CH₄ / NO₂)</h3>
+                      </div>
+                      <span class="stream-val text-alert">+0.84% excess</span>
+                    </div>
+                    <div class="stream-meta">
+                      <span>Pass: S5P_L2__CH4 (India Swath)</span>
+                      <span class="stream-status active">Observed</span>
+                    </div>
+                  </div>
+
+                  <!-- Stream 4 -->
+                  <div class="stream-card active">
+                    <div class="stream-card-top">
+                      <div class="stream-info">
+                        <span class="stream-type">THERMAL RADIOMETRY</span>
+                        <h3 class="stream-name">VIIRS Nightfire (Flaring MW)</h3>
+                      </div>
+                      <span class="stream-val text-warning">0.024 BCM/yr</span>
+                    </div>
+                    <div class="stream-meta">
+                      <span>Pass: VNP46A2 Nightfire 750m</span>
+                      <span class="stream-status active">Observed</span>
+                    </div>
+                  </div>
+
+                  <!-- Stream 5: ERA5 / IMD / CHIRPS / GPM -->
+                  <div class="stream-card active">
+                    <div class="stream-card-top">
+                      <div class="stream-info">
+                        <span class="stream-type">ATMOSPHERE &amp; PRECIP</span>
+                        <h3 class="stream-name">ERA5 / IMD / CHIRPS / GPM</h3>
+                      </div>
+                      <span class="stream-val" id="stream-precip-val" style="color: #0284C7; font-weight: 600;">14.8 mm / +8.6%</span>
+                    </div>
+                    <div class="stream-meta">
+                      <span id="stream-precip-meta">Wind: 4.8 m/s · IMD Normal</span>
+                      <span class="stream-status active" style="background:#E0F2FE; color:#0369A1;">Live Sync</span>
+                    </div>
                   </div>
                 </div>
 
-                <!-- Stream 2: Planet Connection -->
-                <div class="stream-card active" style="border-left: 3px solid #00F0FF; background: rgba(0, 240, 255, 0.04);">
-                  <div class="stream-card-top">
-                    <div class="stream-info">
-                      <span class="stream-type" style="color: #00F0FF;">PLANET LABS SATELLITE</span>
-                      <h3 class="stream-name">PlanetScope 3m High-Res Feed</h3>
-                    </div>
-                    <span class="stream-val" style="color: #00F0FF;">3.0m Optical</span>
+                <div class="col-foot-action" style="margin-top: 0.75rem;">
+                  <button class="btn-ghost small full-width" id="btn-add-sensor-feed">+ Add Sensor Stream</button>
+                </div>
+              </div>
+
+              <!-- SUB-WINDOW 1: Sustainability Layer Details -->
+              <div class="layer-detail-window hidden" id="panel-layer-sustainability">
+                <div class="layer-window-header">
+                  <button class="layer-window-back btn-back-to-overview">← Back to Feeds</button>
+                  <span class="layer-window-chip">🌿 Layer 01 Active</span>
+                </div>
+
+                <div class="layer-window-card">
+                  <div class="layer-window-card-title">Methane &amp; Emissions Discrepancy</div>
+                  <div style="font-size: 0.82rem; color: var(--text-primary); line-height: 1.4;">
+                    Statutory disclosure cap: <strong id="sus-detail-declared">0.05%</strong><br>
+                    Observed Sentinel-5P column: <strong id="sus-detail-observed" style="color: #DC2626;">+0.84% (18.6 ppb)</strong>
                   </div>
-                  <div class="stream-meta">
-                    <span>Pass: Daily Revisit (India Coverage)</span>
-                    <span class="stream-status active" style="background: #E0F2FE; color: #0369A1;">Connected</span>
+                  <div class="layer-metric-grid">
+                    <div class="layer-metric-box">
+                      <div class="layer-metric-box-sub">Variance Delta</div>
+                      <div class="layer-metric-box-val" id="sus-metric-delta" style="color: #DC2626;">+18.4%</div>
+                    </div>
+                    <div class="layer-metric-box">
+                      <div class="layer-metric-box-sub">Sensor Sensor SNR</div>
+                      <div class="layer-metric-box-val">0.96 / QA &gt; 0.5</div>
+                    </div>
                   </div>
                 </div>
 
-                <!-- Stream 3 -->
-                <div class="stream-card active">
-                  <div class="stream-card-top">
-                    <div class="stream-info">
-                      <span class="stream-type">SATELLITE SPECTROMETRY</span>
-                      <h3 class="stream-name">Sentinel-5P TROPOMI (CH₄ / NO₂)</h3>
-                    </div>
-                    <span class="stream-val text-alert">+0.84% excess</span>
-                  </div>
-                  <div class="stream-meta">
-                    <span>Pass: S5P_L2__CH4 (India Swath)</span>
-                    <span class="stream-status active">Observed</span>
+                <div class="layer-window-card">
+                  <div class="layer-window-card-title">Atmospheric Transport (ERA5)</div>
+                  <div style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.35;" id="sus-detail-transport">
+                    Local wind vector: <strong>4.2 m/s @ 250° WSW</strong>. Plume drift trajectory aligns with industrial flare zone.
                   </div>
                 </div>
 
-                <!-- Stream 4 -->
-                <div class="stream-card active">
-                  <div class="stream-card-top">
-                    <div class="stream-info">
-                      <span class="stream-type">THERMAL RADIOMETRY</span>
-                      <h3 class="stream-name">VIIRS Nightfire (Flaring MW)</h3>
-                    </div>
-                    <span class="stream-val text-warning">0.024 BCM/yr</span>
-                  </div>
-                  <div class="stream-meta">
-                    <span>Pass: VNP46A2 Nightfire 750m</span>
-                    <span class="stream-status active">Observed</span>
-                  </div>
-                </div>
-
-                <!-- Stream 5: ERA5 / IMD / CHIRPS / GPM -->
-                <div class="stream-card active">
-                  <div class="stream-card-top">
-                    <div class="stream-info">
-                      <span class="stream-type">ATMOSPHERE &amp; PRECIP</span>
-                      <h3 class="stream-name">ERA5 / IMD / CHIRPS / GPM</h3>
-                    </div>
-                    <span class="stream-val" id="stream-precip-val" style="color: #0284C7; font-weight: 600;">14.8 mm / +8.6%</span>
-                  </div>
-                  <div class="stream-meta">
-                    <span id="stream-precip-meta">Wind: 4.8 m/s · IMD Normal</span>
-                    <span class="stream-status active" style="background:#E0F2FE; color:#0369A1;">Live Sync</span>
+                <div class="layer-window-card">
+                  <div class="layer-window-card-title">Reconciliation Protocol</div>
+                  <div style="font-size: 0.76rem; color: var(--text-secondary);">
+                    • Statutory filing divergence flagged for operator sign-off.<br>
+                    • Recommend targeted optical gas imaging (OGI) drone pass.
                   </div>
                 </div>
               </div>
 
-              <div class="col-foot-action">
-                <button class="btn-ghost small full-width" id="btn-add-sensor-feed">+ Add Sensor Stream</button>
+              <!-- SUB-WINDOW 2: Operations Layer Details -->
+              <div class="layer-detail-window hidden" id="panel-layer-operations">
+                <div class="layer-window-header">
+                  <button class="layer-window-back btn-back-to-overview">← Back to Feeds</button>
+                  <span class="layer-window-chip" style="background:#FFFBEB; color:#B45309; border-color:#FDE68A;">🔥 Layer 02 Active</span>
+                </div>
+
+                <div class="layer-window-card">
+                  <div class="layer-window-card-title">Gas Flaring &amp; Radiative Power</div>
+                  <div style="font-size: 0.82rem; color: var(--text-primary); line-height: 1.4;">
+                    VIIRS Nightfire volume: <strong id="ops-detail-vol" style="color: #D97706;">0.024 BCM/yr</strong><br>
+                    Combustion State: <strong id="ops-detail-combustion">Unlit Flaring / Bypass</strong>
+                  </div>
+                  <div class="layer-metric-grid">
+                    <div class="layer-metric-box">
+                      <div class="layer-metric-box-sub">Radiative MW</div>
+                      <div class="layer-metric-box-val" id="ops-metric-mw">18.2 MW</div>
+                    </div>
+                    <div class="layer-metric-box">
+                      <div class="layer-metric-box-sub">Combustion Eff.</div>
+                      <div class="layer-metric-box-val" id="ops-metric-eff" style="color: #DC2626;">87.4%</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="layer-window-card">
+                  <div class="layer-window-card-title">Planet Optical Cross-Check</div>
+                  <div style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.35;">
+                    PlanetScope 3m high-resolution imagery confirms unannounced daytime flare ignition and smoke opacity divergence.
+                  </div>
+                </div>
+
+                <div class="layer-window-card">
+                  <div class="layer-window-card-title">Operational Value Lost</div>
+                  <div style="font-size: 0.76rem; color: var(--text-secondary);">
+                    Estimated unrecovered gas value: <strong>$1.84M USD/yr</strong> based on regional Henry Hub / LNG benchmark index.
+                  </div>
+                </div>
+              </div>
+
+              <!-- SUB-WINDOW 3: Asset Security Layer Details -->
+              <div class="layer-detail-window hidden" id="panel-layer-security">
+                <div class="layer-window-header">
+                  <button class="layer-window-back btn-back-to-overview">← Back to Feeds</button>
+                  <span class="layer-window-chip" style="background:#EFF6FF; color:#1D4ED8; border-color:#BFDBFE;">🛡️ Layer 03 Active</span>
+                </div>
+
+                <div class="layer-window-card">
+                  <div class="layer-window-card-title">SAR &amp; Surface Footprint Integrity</div>
+                  <div style="font-size: 0.82rem; color: var(--text-primary); line-height: 1.4;">
+                    Sentinel-1 Coherence: <strong id="sec-detail-sar" style="color: #2563EB;">0.97 (Coherent)</strong><br>
+                    Perimeter Boundary: <strong>Permitted Zone Verified</strong>
+                  </div>
+                  <div class="layer-metric-grid">
+                    <div class="layer-metric-box">
+                      <div class="layer-metric-box-sub">SAR Backscatter</div>
+                      <div class="layer-metric-box-val">VV / VH Polar</div>
+                    </div>
+                    <div class="layer-metric-box">
+                      <div class="layer-metric-box-sub">Surface Change</div>
+                      <div class="layer-metric-box-val" style="color: #047857;">&lt; 0.4% Delta</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="layer-window-card">
+                  <div class="layer-window-card-title">Optical &amp; SAR Change Detection</div>
+                  <div style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.35;">
+                    Multi-temporal SAR interferometry shows zero ground subsidence or unpermitted structural expansion beyond leasehold.
+                  </div>
+                </div>
+
+                <div class="layer-window-card">
+                  <div class="layer-window-card-title">Maritime / Dark Vessel Watch</div>
+                  <div style="font-size: 0.76rem; color: var(--text-secondary);">
+                    Synthetic Aperture Radar scan confirms zero slick damping or untracked vessel berths in offshore mooring zone.
+                  </div>
+                </div>
               </div>
             </aside>
 

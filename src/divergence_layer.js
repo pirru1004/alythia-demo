@@ -383,9 +383,82 @@ export function initDivergenceLayer() {
       varItems[3].textContent = data.combustionIdx;
     }
 
+    // Update Sub-Window Layer Details
+    const susDeclared = document.getElementById('sus-detail-declared');
+    const susObserved = document.getElementById('sus-detail-observed');
+    const susDelta = document.getElementById('sus-metric-delta');
+    const susTransport = document.getElementById('sus-detail-transport');
+    if (susDeclared) susDeclared.textContent = data.declared;
+    if (susObserved) susObserved.textContent = data.tropomi;
+    if (susDelta) susDelta.textContent = data.odi;
+    if (susTransport) susTransport.innerHTML = `Local wind vector: <strong>${data.windVal}</strong>. Plume drift trajectory aligns with industrial activity.`;
+
+    const opsVol = document.getElementById('ops-detail-vol');
+    const opsComb = document.getElementById('ops-detail-combustion');
+    if (opsVol) opsVol.textContent = data.viirs;
+    if (opsComb) opsComb.textContent = data.combustionIdx;
+
+    const secSar = document.getElementById('sec-detail-sar');
+    if (secSar) secSar.textContent = data.sar;
+
     // Update Map
     updateMapFocus(key);
   }
+
+  // Layer Box Switcher Logic (Sub-Windows in Column 1)
+  const layerBoxBtns = document.querySelectorAll('.layer-box-btn');
+  const allSubPanels = {
+    overview: document.getElementById('panel-layer-overview'),
+    sustainability: document.getElementById('panel-layer-sustainability'),
+    operations: document.getElementById('panel-layer-operations'),
+    security: document.getElementById('panel-layer-security')
+  };
+
+  function switchLayerSubPanel(targetLayer) {
+    // If overview or invalid, show overview
+    const activePanel = allSubPanels[targetLayer] || allSubPanels.overview;
+
+    // Toggle panels
+    Object.values(allSubPanels).forEach(panel => {
+      if (panel) {
+        panel.classList.add('hidden');
+        panel.classList.remove('active');
+      }
+    });
+
+    if (activePanel) {
+      activePanel.classList.remove('hidden');
+      activePanel.classList.add('active');
+    }
+
+    // Toggle active state on buttons
+    layerBoxBtns.forEach(btn => {
+      if (btn.dataset.layer === targetLayer) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  layerBoxBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const layer = btn.dataset.layer;
+      if (btn.classList.contains('active')) {
+        // Toggle back to overview if clicking already active box
+        switchLayerSubPanel('overview');
+      } else {
+        switchLayerSubPanel(layer);
+      }
+    });
+  });
+
+  // Back to overview buttons
+  document.querySelectorAll('.btn-back-to-overview').forEach(btn => {
+    btn.addEventListener('click', () => {
+      switchLayerSubPanel('overview');
+    });
+  });
 
   // Facility change listener
   facilitySelect?.addEventListener('change', (e) => {

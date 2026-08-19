@@ -2705,6 +2705,173 @@ html, body {
   width: 100%;
 }
 
+/* 3 Layer Selector Boxes at Top of Feeds */
+.divergence-layer-boxes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.layer-box-btn {
+  background: var(--bg-color, #F7F5F1);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.layer-box-btn:hover {
+  background: var(--surface, #FFFFFF);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.layer-box-btn.active {
+  background: var(--surface, #FFFFFF);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(184, 91, 53, 0.15), var(--shadow-sm);
+}
+
+.layer-box-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.layer-box-icon {
+  font-size: 0.95rem;
+}
+
+.layer-box-badge {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.layer-box-btn.active .layer-box-badge {
+  color: var(--accent);
+}
+
+.layer-box-title {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.1;
+  margin-top: 2px;
+}
+
+.layer-box-sub {
+  font-size: 0.64rem;
+  color: var(--text-secondary);
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Layer Detail Sub-Windows in Column 1 */
+.layer-detail-window {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.layer-window-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.layer-window-back {
+  background: none;
+  border: none;
+  font-size: 0.74rem;
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 4px;
+}
+
+.layer-window-back:hover {
+  background: rgba(184, 91, 53, 0.08);
+}
+
+.layer-window-chip {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #ECFDF5;
+  color: #047857;
+  border: 1px solid #A7F3D0;
+}
+
+.layer-window-card {
+  background: var(--bg-color, #F7F5F1);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0.85rem;
+}
+
+.layer-window-card-title {
+  font-size: 0.74rem;
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.layer-metric-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.layer-metric-box {
+  background: var(--surface, #FFFFFF);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
+.layer-metric-box-sub {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  font-family: var(--mono);
+}
+
+.layer-metric-box-val {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 2px;
+}
+
 /* AREA 2: Telemetry Streams */
 .divergence-stream-list {
   display: flex;
