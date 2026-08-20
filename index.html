@@ -1057,7 +1057,7 @@
 
             <!-- AREA 3: CENTER MIDDLE COLUMN (Interactive Agri-Spatial Map Lens) -->
             <main class="divergence-col divergence-col-middle" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
-              <div class="col-head" style="padding: 1rem 1.25rem 0.75rem; border-bottom: 1px solid var(--border-color); margin: 0;">
+              <div class="col-head" style="padding: 0.85rem 1.25rem 0.65rem; border-bottom: 1px solid var(--border-color); margin: 0;">
                 <span class="col-num">02</span>
                 <div class="col-head-flex">
                   <div>
@@ -1068,6 +1068,19 @@
                     <span class="pulse-dot"></span>
                     <span id="map-active-badge-text">Stage Phenology Active</span>
                   </div>
+                </div>
+              </div>
+
+              <!-- Data Layer & Satellite Source Selector Toolbar -->
+              <div class="divergence-source-layer-bar">
+                <span class="source-bar-label">SOURCE LAYER:</span>
+                <div class="source-layer-btn-group" id="divergence-source-btn-group">
+                  <button class="source-layer-btn active" data-source="fusion">🛰️ S1/S2 Fusion</button>
+                  <button class="source-layer-btn" data-source="sar">📡 Sentinel-1 (C-SAR)</button>
+                  <button class="source-layer-btn" data-source="optical">🌿 Sentinel-2 (NDVI)</button>
+                  <button class="source-layer-btn" data-source="weather">🌧️ ERA5 / IMD Weather</button>
+                  <button class="source-layer-btn" data-source="divergence">📊 Baseline Divergence</button>
+                  <button class="source-layer-btn" data-source="agristack">🌾 AgriStack / Mandi</button>
                 </div>
               </div>
 
@@ -1083,9 +1096,83 @@
 
                 <!-- Floating Coordinates Overlay -->
                 <div class="divergence-coords-badge" id="divergence-coords-hud">
-                  <span>LAT: <strong id="divergence-lat">29.6857° N</strong></span>
-                  <span>LNG: <strong id="divergence-lng">76.9907° E</strong></span>
-                  <span class="badge-sub" id="divergence-region-tag">HARYANA AGRO-BELT</span>
+                  <span>LAT: <strong id="divergence-lat">10.7870° N</strong></span>
+                  <span>LNG: <strong id="divergence-lng">79.1378° E</strong></span>
+                  <span class="badge-sub" id="divergence-region-tag">TAMIL NADU CAUVERY DELTA</span>
+                </div>
+
+                <!-- Interactive Pixel Footprint & Source Dates Inspector HUD -->
+                <div class="pixel-telemetry-hud" id="pixel-telemetry-hud">
+                  <div class="pixel-hud-header">
+                    <div class="pixel-hud-title">
+                      <span class="hud-live-dot"></span>
+                      <strong id="hud-square-name">Cauvery Delta Footprint</strong>
+                      <span class="hud-year-chip" id="hud-year-chip">2026 (Live)</span>
+                    </div>
+                    <span class="hud-coords" id="hud-square-coords">Bounds: 10.45°–11.15°N, 78.85°–79.85°E</span>
+                  </div>
+                  
+                  <div class="pixel-sources-grid">
+                    <!-- Sentinel-1 C-Band SAR -->
+                    <div class="pixel-source-card" id="card-src-sar">
+                      <div class="pixel-source-head">
+                        <div class="src-icon-title">
+                          <span class="src-icon">📡</span>
+                          <span class="src-name">Sentinel-1 C-SAR</span>
+                        </div>
+                        <span class="src-date" id="hud-s1-date">📅 2026-07-18</span>
+                      </div>
+                      <div class="pixel-source-body">
+                        <div class="src-val" id="hud-s1-val">-13.4 dB (VH/VV Coherent)</div>
+                        <div class="src-sub" id="hud-s1-sub">Orbit 128 Ascending · 10m GSD</div>
+                      </div>
+                    </div>
+
+                    <!-- Sentinel-2 Optical MSI -->
+                    <div class="pixel-source-card" id="card-src-optical">
+                      <div class="pixel-source-head">
+                        <div class="src-icon-title">
+                          <span class="src-icon">🌿</span>
+                          <span class="src-name">Sentinel-2 MSI</span>
+                        </div>
+                        <span class="src-date" id="hud-s2-date">📅 2026-07-22</span>
+                      </div>
+                      <div class="pixel-source-body">
+                        <div class="src-val" id="hud-s2-val">NDVI: 0.76 (Active Canopy)</div>
+                        <div class="src-sub" id="hud-s2-sub">Tile 44PNB · 1.8% Cloud Cover</div>
+                      </div>
+                    </div>
+
+                    <!-- ERA5 / IMD Gridded Weather -->
+                    <div class="pixel-source-card" id="card-src-weather">
+                      <div class="pixel-source-head">
+                        <div class="src-icon-title">
+                          <span class="src-icon">🌧️</span>
+                          <span class="src-name">ERA5 / IMD Gridded</span>
+                        </div>
+                        <span class="src-date" id="hud-era5-date">📅 2026-07-26</span>
+                      </div>
+                      <div class="pixel-source-body">
+                        <div class="src-val" id="hud-era5-val">Soil Moisture: 36.8%</div>
+                        <div class="src-sub" id="hud-era5-sub">Precip: +4.2% LPA · 28.4°C</div>
+                      </div>
+                    </div>
+
+                    <!-- AgriStack & Agmarknet Mandi -->
+                    <div class="pixel-source-card" id="card-src-agristack">
+                      <div class="pixel-source-head">
+                        <div class="src-icon-title">
+                          <span class="src-icon">🌾</span>
+                          <span class="src-name">AgriStack / Mandi</span>
+                        </div>
+                        <span class="src-date" id="hud-mandi-date">📅 2026-07-28</span>
+                      </div>
+                      <div class="pixel-source-body">
+                        <div class="src-val" id="hud-mandi-val">₹2,480 / q (+4.6% WoW)</div>
+                        <div class="src-sub" id="hud-mandi-sub">Thanjavur APMC · Registry Synced</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -1162,21 +1249,32 @@
 
           </div>
 
-          <!-- AREA 5: BOTTOM (Kharif Season Sowing Front Scrubber) -->
+          <!-- AREA 5: BOTTOM (Multi-Year Slider & Kharif Sowing Front Scrubber) -->
           <footer class="divergence-area-bottom">
             <div class="divergence-bottom-inner">
-              <div class="bottom-left-info">
-                <span class="bot-label">ENGINE INGEST:</span>
-                <span class="bot-tags">
-                  <span class="bot-tag">SENTINEL-1 SAR</span>
-                  <span class="bot-tag">SENTINEL-2 MSI</span>
-                  <span class="bot-tag">ERA5 METEOROLOGY</span>
-                  <span class="bot-tag">IMD GRIDDED</span>
-                </span>
+              
+              <!-- Multi-Year Slider Component -->
+              <div class="bottom-year-controller">
+                <div class="year-slider-header">
+                  <span class="year-slider-label">OBSERVATION YEAR:</span>
+                  <span class="year-active-tag" id="year-slider-active-label">2026 (Live Kharif)</span>
+                </div>
+                <div class="year-slider-wrap">
+                  <input type="range" min="2021" max="2026" value="2026" step="1" class="custom-year-range" id="divergence-year-slider">
+                  <div class="year-slider-marks">
+                    <span class="year-mark" data-year="2021">2021</span>
+                    <span class="year-mark" data-year="2022">2022</span>
+                    <span class="year-mark" data-year="2023">2023 (El Niño)</span>
+                    <span class="year-mark" data-year="2024">2024</span>
+                    <span class="year-mark" data-year="2025">2025</span>
+                    <span class="year-mark active" data-year="2026">2026 (Live)</span>
+                  </div>
+                </div>
               </div>
 
+              <!-- Kharif Sowing Front Scrubber -->
               <div class="bottom-center-timeline">
-                <span class="timeline-label">Kharif Sowing Front Scrubber:</span>
+                <span class="timeline-label">Kharif Sowing Front Progression:</span>
                 <div class="timeline-ticks" id="timeline-scrubber-ticks">
                   <button class="tick-btn" data-sweep="0">Jun 01 (East Start)</button>
                   <button class="tick-btn" data-sweep="1">Jun 15 (Gangetic)</button>

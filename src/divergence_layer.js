@@ -4,6 +4,11 @@
  * - Box 1: Distribution & Inventory Positioning (Proposed Pilot Scope)
  * - Box 2: Demand Sensing & Forecasting (Deviation from Baseline)
  * - Box 3: Collection & Credit Planning (Composite Stress Rank & Agmarknet)
+ *
+ * Feature Expansion:
+ * - Multi-Year Observation Slider (2021 – 2026)
+ * - Dynamic Data Layer / Satellite Source Switcher (Fusion, SAR, Optical, Weather, Divergence, Mandi)
+ * - Pixel Footprint Telemetry Inspector with Acquisition Dates from All Sources
  */
 
 import L from 'leaflet';
@@ -14,6 +19,8 @@ let baseSatelliteLayer = null;
 let agroPolygonsLayer = null;
 let depotMarkersLayer = null;
 let activePreset = 'box1'; // 'box1', 'box2', or 'box3'
+let activeDataSource = 'fusion'; // 'fusion', 'sar', 'optical', 'weather', 'divergence', 'agristack'
+let selectedYear = 2026;
 let currentSweepStep = 2; // Scrubber index (0 to 5)
 
 // Indian Agricultural Comparison Regions for Divergence Layer Demo
@@ -183,6 +190,243 @@ const agroCatchmentData = {
   }
 };
 
+// Multi-Year Telemetry & Observation Metadata across Connected Satellite & Ground Ingests
+const agroYearlyTelemetryData = {
+  cauvery_delta: {
+    2026: {
+      label: "2026 (Live Kharif)",
+      acreage: "248,000 ha",
+      delta: "+8.2% vs Baseline",
+      deltaNum: 8.2,
+      ci: "95% CI: [238k – 258k ha]",
+      s1Date: "2026-07-18",
+      s1Val: "-13.4 dB (VH/VV Coherent)",
+      s1Sub: "Orbit 128 Ascending · 10m GSD",
+      s2Date: "2026-07-22",
+      s2Val: "NDVI: 0.76 (Active Canopy)",
+      s2Sub: "Tile 44PNB · 1.8% Cloud Cover",
+      era5Date: "2026-07-26",
+      era5Val: "Soil Moisture: 36.8%",
+      era5Sub: "Precip: +4.2% LPA · 28.4°C",
+      mandiDate: "2026-07-28",
+      mandiVal: "₹2,480 / q (+4.6% WoW)",
+      mandiSub: "Thanjavur APMC · Registry Synced"
+    },
+    2025: {
+      label: "2025 (Near-Normal)",
+      acreage: "234,000 ha",
+      delta: "+2.1% vs Baseline",
+      deltaNum: 2.1,
+      ci: "95% CI: [226k – 242k ha]",
+      s1Date: "2025-07-16",
+      s1Val: "-14.1 dB (Normal Tillering)",
+      s1Sub: "Orbit 128 Ascending · Coherent",
+      s2Date: "2025-07-20",
+      s2Val: "NDVI: 0.71 (Normal Canopy)",
+      s2Sub: "Tile 44PNB · 4.2% Cloud Cover",
+      era5Date: "2025-07-25",
+      era5Val: "Soil Moisture: 33.2%",
+      era5Sub: "Precip: +1.1% LPA · 29.1°C",
+      mandiDate: "2025-07-28",
+      mandiVal: "₹2,320 / q (Baseline)",
+      mandiSub: "Thanjavur APMC · Finalized"
+    },
+    2024: {
+      label: "2024 (Transitional)",
+      acreage: "226,000 ha",
+      delta: "-1.4% vs Baseline",
+      deltaNum: -1.4,
+      ci: "95% CI: [218k – 234k ha]",
+      s1Date: "2024-07-17",
+      s1Val: "-14.8 dB (Delayed Sowing)",
+      s1Sub: "Orbit 128 Ascending · 10m GSD",
+      s2Date: "2024-07-21",
+      s2Val: "NDVI: 0.64 (Emergence Delay)",
+      s2Sub: "Tile 44PNB · 2.1% Cloud Cover",
+      era5Date: "2024-07-25",
+      era5Val: "Soil Moisture: 29.8%",
+      era5Sub: "Precip: -3.8% LPA · 30.2°C",
+      mandiDate: "2024-07-27",
+      mandiVal: "₹2,240 / q (-2.1%)",
+      mandiSub: "Thanjavur APMC · Historical"
+    },
+    2023: {
+      label: "2023 (El Niño Deficit)",
+      acreage: "198,000 ha",
+      delta: "-13.6% vs Baseline",
+      deltaNum: -13.6,
+      ci: "95% CI: [190k – 206k ha]",
+      s1Date: "2023-07-15",
+      s1Val: "-18.2 dB (Low Backscatter / Dry)",
+      s1Sub: "Orbit 128 Ascending · Drought",
+      s2Date: "2023-07-19",
+      s2Val: "NDVI: 0.48 (Severe Water Stress)",
+      s2Sub: "Tile 44PNB · 0.9% Cloud Cover",
+      era5Date: "2023-07-24",
+      era5Val: "Soil Moisture: 21.4%",
+      era5Sub: "Precip: -22.4% LPA (Critical)",
+      mandiDate: "2023-07-28",
+      mandiVal: "₹2,150 / q (-8.4%)",
+      mandiSub: "Thanjavur APMC · Drought Record"
+    },
+    2022: {
+      label: "2022 (Normal Monsoon)",
+      acreage: "236,000 ha",
+      delta: "+3.0% vs Baseline",
+      deltaNum: 3.0,
+      ci: "95% CI: [228k – 244k ha]",
+      s1Date: "2022-07-18",
+      s1Val: "-13.9 dB (Healthy Tillering)",
+      s1Sub: "Orbit 128 Ascending · 10m GSD",
+      s2Date: "2022-07-22",
+      s2Val: "NDVI: 0.73 (Good Canopy)",
+      s2Sub: "Tile 44PNB · 3.8% Cloud Cover",
+      era5Date: "2022-07-26",
+      era5Val: "Soil Moisture: 35.1%",
+      era5Sub: "Precip: +3.2% LPA · 28.9°C",
+      mandiDate: "2022-07-28",
+      mandiVal: "₹2,080 / q",
+      mandiSub: "Thanjavur APMC · Historical"
+    },
+    2021: {
+      label: "2021 (La Niña Surge)",
+      acreage: "252,000 ha",
+      delta: "+10.0% vs Baseline",
+      deltaNum: 10.0,
+      ci: "95% CI: [244k – 260k ha]",
+      s1Date: "2021-07-19",
+      s1Val: "-12.8 dB (High Soil Moisture)",
+      s1Sub: "Orbit 128 Ascending · Water Surge",
+      s2Date: "2021-07-23",
+      s2Val: "NDVI: 0.79 (Vigorous Canopy)",
+      s2Sub: "Tile 44PNB · 5.1% Cloud Cover",
+      era5Date: "2021-07-27",
+      era5Val: "Soil Moisture: 41.2%",
+      era5Sub: "Precip: +14.8% LPA (Surplus)",
+      mandiDate: "2021-07-29",
+      mandiVal: "₹1,960 / q",
+      mandiSub: "Thanjavur APMC · High Supply"
+    }
+  },
+
+  nizamabad_karimnagar: {
+    2026: {
+      label: "2026 (Live Kharif)",
+      acreage: "186,400 ha",
+      delta: "-11.6% vs Baseline",
+      deltaNum: -11.6,
+      ci: "95% CI: [178k – 194k ha]",
+      s1Date: "2026-07-12",
+      s1Val: "-16.2 dB (Canal Rationing)",
+      s1Sub: "Orbit 70 Descending · 10m GSD",
+      s2Date: "2026-07-16",
+      s2Val: "NDVI: 0.58 (Mixed Cotton/Paddy)",
+      s2Sub: "Tile 44QKB · 3.4% Cloud Cover",
+      era5Date: "2026-07-22",
+      era5Val: "Soil Moisture: 27.4%",
+      era5Sub: "Precip: -8.6% LPA · 31.2°C",
+      mandiDate: "2026-07-28",
+      mandiVal: "₹2,310 / q (-1.8% DoD)",
+      mandiSub: "Nizamabad APMC · Registry Synced"
+    },
+    2025: {
+      label: "2025 (Moderate Variance)",
+      acreage: "198,000 ha",
+      delta: "-6.0% vs Baseline",
+      deltaNum: -6.0,
+      ci: "95% CI: [190k – 206k ha]",
+      s1Date: "2025-07-14",
+      s1Val: "-15.4 dB (Partial Lift)",
+      s1Sub: "Orbit 70 Descending",
+      s2Date: "2025-07-18",
+      s2Val: "NDVI: 0.65 (Moderate Canopy)",
+      s2Sub: "Tile 44QKB · 2.8% Cloud Cover",
+      era5Date: "2025-07-23",
+      era5Val: "Soil Moisture: 30.1%",
+      era5Sub: "Precip: -2.1% LPA · 30.5°C",
+      mandiDate: "2025-07-27",
+      mandiVal: "₹2,220 / q",
+      mandiSub: "Nizamabad APMC"
+    },
+    2024: {
+      label: "2024 (Baseline Level)",
+      acreage: "206,000 ha",
+      delta: "-2.2% vs Baseline",
+      deltaNum: -2.2,
+      ci: "95% CI: [198k – 214k ha]",
+      s1Date: "2024-07-13",
+      s1Val: "-15.1 dB (Normal Lift)",
+      s1Sub: "Orbit 70 Descending",
+      s2Date: "2024-07-17",
+      s2Val: "NDVI: 0.68",
+      s2Sub: "Tile 44QKB · 1.9% Cloud Cover",
+      era5Date: "2024-07-22",
+      era5Val: "Soil Moisture: 32.4%",
+      era5Sub: "Precip: +0.4% LPA · 29.8°C",
+      mandiDate: "2024-07-26",
+      mandiVal: "₹2,160 / q",
+      mandiSub: "Nizamabad APMC"
+    },
+    2023: {
+      label: "2023 (Severe El Niño Drought)",
+      acreage: "164,000 ha",
+      delta: "-22.2% vs Baseline",
+      deltaNum: -22.2,
+      ci: "95% CI: [156k – 172k ha]",
+      s1Date: "2023-07-11",
+      s1Val: "-19.4 dB (Severe Groundwater Stress)",
+      s1Sub: "Orbit 70 Descending · Drought",
+      s2Date: "2023-07-15",
+      s2Val: "NDVI: 0.42 (Stunted Emergence)",
+      s2Sub: "Tile 44QKB · 0.6% Cloud Cover",
+      era5Date: "2023-07-21",
+      era5Val: "Soil Moisture: 18.2%",
+      era5Sub: "Precip: -28.6% LPA (Deficit)",
+      mandiDate: "2023-07-28",
+      mandiVal: "₹2,040 / q (-12.2%)",
+      mandiSub: "Nizamabad APMC · Drought Failure"
+    },
+    2022: {
+      label: "2022 (Surplus Monsoon)",
+      acreage: "218,000 ha",
+      delta: "+3.4% vs Baseline",
+      deltaNum: 3.4,
+      ci: "95% CI: [210k – 226k ha]",
+      s1Date: "2022-07-15",
+      s1Val: "-14.6 dB (Full Canal Supply)",
+      s1Sub: "Orbit 70 Descending",
+      s2Date: "2022-07-19",
+      s2Val: "NDVI: 0.72",
+      s2Sub: "Tile 44QKB · 4.1% Cloud Cover",
+      era5Date: "2022-07-24",
+      era5Val: "Soil Moisture: 34.6%",
+      era5Sub: "Precip: +6.2% LPA · 29.2°C",
+      mandiDate: "2022-07-28",
+      mandiVal: "₹1,980 / q",
+      mandiSub: "Nizamabad APMC"
+    },
+    2021: {
+      label: "2021 (Favorable Kharif)",
+      acreage: "224,000 ha",
+      delta: "+6.2% vs Baseline",
+      deltaNum: 6.2,
+      ci: "95% CI: [216k – 232k ha]",
+      s1Date: "2021-07-16",
+      s1Val: "-13.8 dB (High Surface Water)",
+      s1Sub: "Orbit 70 Descending",
+      s2Date: "2021-07-20",
+      s2Val: "NDVI: 0.75",
+      s2Sub: "Tile 44QKB · 3.9% Cloud Cover",
+      era5Date: "2021-07-25",
+      era5Val: "Soil Moisture: 37.8%",
+      era5Sub: "Precip: +11.4% LPA · 28.7°C",
+      mandiDate: "2021-07-29",
+      mandiVal: "₹1,880 / q",
+      mandiSub: "Nizamabad APMC"
+    }
+  }
+};
+
 /**
  * Initializes the Leaflet map centered in India with Sentinel-1/2 fusion connection
  */
@@ -226,60 +470,91 @@ function initDivergenceMap() {
 }
 
 /**
- * Renders dynamic map layers based on the active preset:
- * - Box 1: Coloured by Current Crop Stage + Overlaid Depots
- * - Box 2: Coloured by Deviation from Baseline (Red = Below, Blue = Above)
- * - Box 3: Coloured by Composite Stress Rank (1 to 5)
+ * Renders dynamic map layers based on the active preset & selected data layer source:
  */
 function renderMapLayers() {
   if (!agroPolygonsLayer || !depotMarkersLayer) return;
   agroPolygonsLayer.clearLayers();
   depotMarkersLayer.clearLayers();
 
+  const facilitySelect = document.getElementById('divergence-facility-select');
+  const activeKey = facilitySelect?.value || 'cauvery_delta';
+
   Object.values(agroCatchmentData).forEach(item => {
     let polygonColor = '#10B981';
-    let polygonFillOpacity = 0.22;
+    let polygonFillOpacity = 0.25;
     let polygonLabel = item.name;
+    const yearData = agroYearlyTelemetryData[item.key]?.[selectedYear] || agroYearlyTelemetryData[item.key]?.[2026];
 
-    if (activePreset === 'box1') {
-      // Box 1: Stage Phenology
-      polygonColor = item.b1.stageColor;
-      polygonLabel = `${item.name} — Stage: ${item.b1.stage}`;
-    } else if (activePreset === 'box2') {
-      // Box 2: Divergence from Baseline
-      if (item.b2.baselineDeltaNum < -10) {
-        polygonColor = '#DC2626'; // Deep Red for severe deficit
-        polygonFillOpacity = 0.35;
-      } else if (item.b2.baselineDeltaNum < 0) {
-        polygonColor = '#F59E0B'; // Amber/Red for moderate deficit
-        polygonFillOpacity = 0.25;
+    if (activeDataSource === 'sar') {
+      // Sentinel-1 C-Band SAR Mode
+      polygonColor = '#0EA5E9';
+      polygonFillOpacity = 0.35;
+      polygonLabel = `${item.name} · S1 SAR: ${yearData.s1Val} (${yearData.s1Date})`;
+    } else if (activeDataSource === 'optical') {
+      // Sentinel-2 Optical NDVI Mode
+      polygonColor = '#10B981';
+      polygonFillOpacity = 0.38;
+      polygonLabel = `${item.name} · S2 Optical: ${yearData.s2Val} (${yearData.s2Date})`;
+    } else if (activeDataSource === 'weather') {
+      // ERA5 / IMD Gridded Weather Mode
+      polygonColor = yearData.deltaNum < -10 ? '#EF4444' : '#3B82F6';
+      polygonFillOpacity = 0.32;
+      polygonLabel = `${item.name} · ERA5 Weather: ${yearData.era5Val} (${yearData.era5Date})`;
+    } else if (activeDataSource === 'divergence' || activePreset === 'box2') {
+      // Divergence Mode
+      if (yearData.deltaNum < -10) {
+        polygonColor = '#DC2626'; // Red for severe deficit
+        polygonFillOpacity = 0.40;
+      } else if (yearData.deltaNum < 0) {
+        polygonColor = '#F59E0B'; // Amber for moderate deficit
+        polygonFillOpacity = 0.28;
       } else {
         polygonColor = '#2563EB'; // Blue for acreage expansion
-        polygonFillOpacity = 0.35;
+        polygonFillOpacity = 0.38;
       }
-      polygonLabel = `${item.name} — Baseline Delta: ${item.b2.baselineDelta}`;
-    } else if (activePreset === 'box3') {
-      // Box 3: Composite Stress Rank (1 to 5)
+      polygonLabel = `${item.name} · Baseline Variance [${selectedYear}]: ${yearData.delta}`;
+    } else if (activeDataSource === 'agristack' || activePreset === 'box3') {
+      // Mandi & Stress Ranking Mode
       const rank = item.b3.stressRankNum;
       if (rank === 1) polygonColor = '#DC2626';
       else if (rank === 2) polygonColor = '#EA580C';
       else if (rank === 3) polygonColor = '#D97706';
       else if (rank === 4) polygonColor = '#059669';
       else polygonColor = '#2563EB';
-      polygonLabel = `${item.name} — Composite Stress: ${item.b3.stressRank}`;
+      polygonLabel = `${item.name} · Mandi Price: ${yearData.mandiVal} (${yearData.mandiDate})`;
+    } else {
+      // Default Box 1: Stage Phenology Fusion
+      polygonColor = item.b1.stageColor;
+      polygonLabel = `${item.name} — Stage: ${item.b1.stage} (${selectedYear})`;
     }
 
-    // Catchment Polygon Boundary
+    // Catchment Polygon Boundary (The Square Footprint)
     if (item.bounds) {
+      const isSelectedRegion = item.key === activeKey;
       const rect = L.rectangle(item.bounds, {
         color: polygonColor,
-        weight: 2,
-        dashArray: activePreset === 'box2' ? '4, 4' : undefined,
+        weight: isSelectedRegion ? 3 : 1.5,
+        dashArray: activeDataSource === 'divergence' ? '4, 4' : undefined,
         fillColor: polygonColor,
-        fillOpacity: polygonFillOpacity
+        fillOpacity: isSelectedRegion ? Math.min(polygonFillOpacity + 0.1, 0.5) : polygonFillOpacity
       }).addTo(agroPolygonsLayer);
 
+      // Bind detailed tooltip with acquisition dates
+      const popupHtml = `
+        <div style="font-family: sans-serif; font-size: 0.76rem; min-width: 220px; line-height: 1.4;">
+          <strong style="color: #0F172A; font-size: 0.82rem;">${item.name}</strong><br>
+          <span style="color: #64748B;">Observation Year: <strong>${selectedYear}</strong></span>
+          <hr style="margin: 4px 0; border: none; border-top: 1px solid #E2E8F0;">
+          <div>📡 <strong>S1 SAR (${yearData.s1Date}):</strong> ${yearData.s1Val}</div>
+          <div>🌿 <strong>S2 MSI (${yearData.s2Date}):</strong> ${yearData.s2Val}</div>
+          <div>🌧️ <strong>ERA5 (${yearData.era5Date}):</strong> ${yearData.era5Val}</div>
+          <div>🌾 <strong>Mandi (${yearData.mandiDate}):</strong> ${yearData.mandiVal}</div>
+        </div>
+      `;
       rect.bindTooltip(polygonLabel, { direction: 'top', className: 'map-catchment-tooltip' });
+      rect.bindPopup(popupHtml);
+
       rect.on('click', () => {
         const select = document.getElementById('divergence-facility-select');
         if (select) {
@@ -320,7 +595,7 @@ function renderMapLayers() {
  * Updates map focus when selecting a new catchment region
  */
 function updateMapFocus(key) {
-  const data = agroCatchmentData[key] || agroCatchmentData.karnal;
+  const data = agroCatchmentData[key] || agroCatchmentData.cauvery_delta;
   if (!divergenceMap) return;
 
   // Smooth fly-to
@@ -339,10 +614,11 @@ function updateMapFocus(key) {
 }
 
 /**
- * Populates all 3 sub-windows & analytics cards with data from the active catchment
+ * Populates all 3 sub-windows & analytics cards with data from the active catchment & year
  */
 function populateCatchmentData(key) {
   const data = agroCatchmentData[key] || agroCatchmentData.cauvery_delta;
+  const yearData = agroYearlyTelemetryData[data.key]?.[selectedYear] || agroYearlyTelemetryData[data.key]?.[2026];
 
   // 1. Sub-Window 1 (Box 1 · Distribution & Inventory Positioning)
   const b1Acreage = document.getElementById('b1-catchment-acreage');
@@ -373,12 +649,12 @@ function populateCatchmentData(key) {
   const b2PulsesShift = document.getElementById('b2-mix-pulses-shift');
   const b2Ceiling = document.getElementById('b2-ceiling-pct');
 
-  if (b2Acreage) b2Acreage.textContent = data.b2.districtAcreage;
+  if (b2Acreage) b2Acreage.textContent = yearData.acreage;
   if (b2Delta) {
-    b2Delta.textContent = data.b2.baselineDelta;
-    b2Delta.style.color = data.b2.baselineDeltaNum < 0 ? '#DC2626' : '#2563EB';
+    b2Delta.textContent = yearData.delta;
+    b2Delta.style.color = yearData.deltaNum < 0 ? '#DC2626' : '#2563EB';
   }
-  if (b2Ci) b2Ci.textContent = data.b2.ciBand;
+  if (b2Ci) b2Ci.textContent = yearData.ci;
   if (b2Paddy) b2Paddy.textContent = data.b2.mixPaddy;
   if (b2PaddyShift) b2PaddyShift.textContent = data.b2.mixPaddyShift;
   if (b2Cotton) b2Cotton.textContent = data.b2.mixCotton;
@@ -395,23 +671,88 @@ function populateCatchmentData(key) {
   const b3Mandi = document.getElementById('b3-mandi-price');
 
   if (b3Rank) b3Rank.textContent = data.b3.stressRank;
-  if (b3Anomaly) b3Anomaly.textContent = data.b3.prodAnomaly;
+  if (b3Anomaly) b3Anomaly.textContent = `${yearData.deltaNum >= 0 ? '+' : ''}${yearData.deltaNum}% Biomass Delta`;
   if (b3Harvest) b3Harvest.textContent = data.b3.harvestWindow;
   if (b3Concentration) b3Concentration.textContent = data.b3.cropConcentration;
-  if (b3Mandi) b3Mandi.textContent = data.b3.mandiPrice;
+  if (b3Mandi) b3Mandi.textContent = yearData.mandiVal;
 
-  // 4. Update Right Column (Decision Analytics Score & Prescriptive Action)
-  updateRightColumnAnalytics(data);
+  // 4. Update Pixel Footprint Telemetry HUD (All Sources with Dates)
+  updatePixelTelemetryHUD(data, yearData);
 
-  // 5. Update Map Viewport & Polygons
+  // 5. Update Right Column (Decision Analytics Score & Prescriptive Action)
+  updateRightColumnAnalytics(data, yearData);
+
+  // 6. Update Map Viewport & Polygons
   updateMapFocus(key);
   renderMapLayers();
 }
 
 /**
- * Updates Area 4 (Right Column) based on active preset and selected catchment
+ * Updates the floating Pixel Footprint Telemetry Inspector HUD with dates from all connected sources
  */
-function updateRightColumnAnalytics(data) {
+function updatePixelTelemetryHUD(regionData, yearData) {
+  const squareName = document.getElementById('hud-square-name');
+  const squareCoords = document.getElementById('hud-square-coords');
+  const yearChip = document.getElementById('hud-year-chip');
+
+  const s1Date = document.getElementById('hud-s1-date');
+  const s1Val = document.getElementById('hud-s1-val');
+  const s1Sub = document.getElementById('hud-s1-sub');
+
+  const s2Date = document.getElementById('hud-s2-date');
+  const s2Val = document.getElementById('hud-s2-val');
+  const s2Sub = document.getElementById('hud-s2-sub');
+
+  const era5Date = document.getElementById('hud-era5-date');
+  const era5Val = document.getElementById('hud-era5-val');
+  const era5Sub = document.getElementById('hud-era5-sub');
+
+  const mandiDate = document.getElementById('hud-mandi-date');
+  const mandiVal = document.getElementById('hud-mandi-val');
+  const mandiSub = document.getElementById('hud-mandi-sub');
+
+  if (squareName) squareName.textContent = `${regionData.name.split('—')[0].trim()} Square`;
+  if (squareCoords && regionData.bounds) {
+    squareCoords.textContent = `Bounds: ${regionData.bounds[0][0]}°–${regionData.bounds[1][0]}°N, ${regionData.bounds[0][1]}°–${regionData.bounds[1][1]}°E`;
+  }
+  if (yearChip) yearChip.textContent = `${selectedYear} (${selectedYear === 2026 ? 'Live' : 'Historical'})`;
+
+  if (s1Date) s1Date.textContent = `📅 ${yearData.s1Date}`;
+  if (s1Val) s1Val.textContent = yearData.s1Val;
+  if (s1Sub) s1Sub.textContent = yearData.s1Sub;
+
+  if (s2Date) s2Date.textContent = `📅 ${yearData.s2Date}`;
+  if (s2Val) s2Val.textContent = yearData.s2Val;
+  if (s2Sub) s2Sub.textContent = yearData.s2Sub;
+
+  if (era5Date) era5Date.textContent = `📅 ${yearData.era5Date}`;
+  if (era5Val) era5Val.textContent = yearData.era5Val;
+  if (era5Sub) era5Sub.textContent = yearData.era5Sub;
+
+  if (mandiDate) mandiDate.textContent = `📅 ${yearData.mandiDate}`;
+  if (mandiVal) mandiVal.textContent = yearData.mandiVal;
+  if (mandiSub) mandiSub.textContent = yearData.mandiSub;
+
+  // Highlight active source card in HUD
+  const cards = {
+    sar: document.getElementById('card-src-sar'),
+    optical: document.getElementById('card-src-optical'),
+    weather: document.getElementById('card-src-weather'),
+    agristack: document.getElementById('card-src-agristack')
+  };
+
+  Object.entries(cards).forEach(([srcKey, card]) => {
+    if (card) {
+      if (srcKey === activeDataSource) card.classList.add('highlighted');
+      else card.classList.remove('highlighted');
+    }
+  });
+}
+
+/**
+ * Updates Area 4 (Right Column) based on active preset and selected catchment/year
+ */
+function updateRightColumnAnalytics(data, yearData) {
   const rTitle = document.getElementById('rcol-title');
   const rSub = document.getElementById('rcol-sub');
   const rMetricLabel = document.getElementById('rcol-metric-label');
@@ -432,7 +773,7 @@ function updateRightColumnAnalytics(data) {
   const var4Val = document.getElementById('rcol-var4-val');
 
   if (activePreset === 'box1') {
-    if (rTitle) rTitle.textContent = "Placement & Decision Score";
+    if (rTitle) rTitle.textContent = `Placement Readiness (${selectedYear})`;
     if (rSub) rSub.textContent = "Optimal SKU stocking window & lead time";
     if (rMetricLabel) rMetricLabel.textContent = "PLACEMENT READINESS INDEX";
     if (rMetricNumber) rMetricNumber.textContent = data.b1.readinessScore;
@@ -447,32 +788,32 @@ function updateRightColumnAnalytics(data) {
     if (var1Name) var1Name.textContent = "Phenology Stage Progress";
     if (var1Val) var1Val.textContent = data.b1.stage;
     if (var2Name) var2Name.textContent = "Soil Moisture (0–7cm)";
-    if (var2Val) var2Val.textContent = data.b1.soilMoisture;
+    if (var2Val) var2Val.textContent = yearData.era5Val;
     if (var3Name) var3Name.textContent = "Application Lead Time";
     if (var3Val) var3Val.textContent = data.b1.leadTime;
-    if (var4Name) var4Name.textContent = "Catchment Buffer Acreage";
+    if (var4Name) var4Name.textContent = "Catchment Observed Area";
     if (var4Val) var4Val.textContent = data.b1.catchmentAcreage;
 
     if (rRecList) {
       rRecList.innerHTML = data.b1.recList.map(item => `<li>${item}</li>`).join('');
     }
   } else if (activePreset === 'box2') {
-    if (rTitle) rTitle.textContent = "Demand Divergence Assessment";
+    if (rTitle) rTitle.textContent = `Demand Divergence (${selectedYear})`;
     if (rSub) rSub.textContent = "Deviation from historical multi-year normal";
     if (rMetricLabel) rMetricLabel.textContent = "NET FORECAST DIVERGENCE";
-    if (rMetricNumber) rMetricNumber.textContent = data.b2.divergenceScore;
+    if (rMetricNumber) rMetricNumber.textContent = yearData.delta;
     if (rMetricBadge) {
-      rMetricBadge.textContent = data.b2.divergenceBadge;
-      rMetricBadge.className = `score-badge ${data.b2.badgeClass}`;
+      rMetricBadge.textContent = yearData.deltaNum < 0 ? 'Deficit Variance' : 'Acreage Expansion';
+      rMetricBadge.className = `score-badge ${yearData.deltaNum < 0 ? 'badge-danger' : 'badge-success'}`;
     }
     if (rNarrative) rNarrative.textContent = data.b2.narrative;
     if (rConfPct) rConfPct.textContent = data.b2.confidence;
     if (rConfFill) rConfFill.style.width = data.b2.confidence;
 
     if (var1Name) var1Name.textContent = "District Acreage vs Baseline";
-    if (var1Val) var1Val.textContent = data.b2.baselineDelta;
-    if (var2Name) var2Name.textContent = "Vegetation Stress Anomaly";
-    if (var2Val) var2Val.textContent = data.b2.stressAnomaly;
+    if (var1Val) var1Val.textContent = yearData.delta;
+    if (var2Name) var2Name.textContent = "Sentinel-2 NDVI Canopy";
+    if (var2Val) var2Val.textContent = yearData.s2Val;
     if (var3Name) var3Name.textContent = "Agronomic Explanatory Ceiling";
     if (var3Val) var3Val.textContent = `${data.b2.ceilingPct} Error Explained`;
     if (var4Name) var4Name.textContent = "Dominant Crop Mix Shift";
@@ -482,7 +823,7 @@ function updateRightColumnAnalytics(data) {
       rRecList.innerHTML = data.b2.recList.map(item => `<li>${item}</li>`).join('');
     }
   } else if (activePreset === 'box3') {
-    if (rTitle) rTitle.textContent = "Collection & Credit Risk Rating";
+    if (rTitle) rTitle.textContent = `Collection & Credit Risk (${selectedYear})`;
     if (rSub) rSub.textContent = "Composite stress ranking & liquidity timing";
     if (rMetricLabel) rMetricLabel.textContent = "COMPOSITE STRESS RATING";
     if (rMetricNumber) rMetricNumber.textContent = data.b3.creditScore;
@@ -495,13 +836,13 @@ function updateRightColumnAnalytics(data) {
     if (rConfFill) rConfFill.style.width = data.b3.confidence;
 
     if (var1Name) var1Name.textContent = "Relative Biomass Anomaly";
-    if (var1Val) var1Val.textContent = data.b3.prodAnomaly;
+    if (var1Val) var1Val.textContent = `${yearData.deltaNum >= 0 ? '+' : ''}${yearData.deltaNum}% vs Normal`;
     if (var2Name) var2Name.textContent = "Estimated Harvest Window";
     if (var2Val) var2Val.textContent = data.b3.harvestWindow;
     if (var3Name) var3Name.textContent = "Catchment HHI Concentration";
     if (var3Val) var3Val.textContent = data.b3.cropConcentration;
     if (var4Name) var4Name.textContent = "Mandi Price Trend (Agmarknet)";
-    if (var4Val) var4Val.textContent = data.b3.mandiPrice;
+    if (var4Val) var4Val.textContent = yearData.mandiVal;
 
     if (rRecList) {
       rRecList.innerHTML = data.b3.recList.map(item => `<li>${item}</li>`).join('');
@@ -510,7 +851,7 @@ function updateRightColumnAnalytics(data) {
 }
 
 /**
- * Updates map titles, badges, and legend when switching presets
+ * Updates map titles, badges, and legend when switching presets or data layers
  */
 function updateMapLensUI() {
   const mapTitle = document.getElementById('map-lens-title');
@@ -518,20 +859,44 @@ function updateMapLensUI() {
   const mapBadgeText = document.getElementById('map-active-badge-text');
   const mapLegendStrip = document.getElementById('matrix-legend-strip');
 
-  if (activePreset === 'box1') {
-    if (mapTitle) mapTitle.textContent = "Agri-Spatial Map & Sowing Front Lens";
-    if (mapSub) mapSub.textContent = "Coloured by current crop stage · Depots overlaid · Scrubber drives sowing sweep";
-    if (mapBadgeText) mapBadgeText.textContent = "Stage Phenology Active";
+  if (activeDataSource === 'sar') {
+    if (mapTitle) mapTitle.textContent = `Sentinel-1 C-Band SAR Backscatter (${selectedYear})`;
+    if (mapSub) mapSub.textContent = "VV/VH coherent radar scatter · Day/night all-weather canopy penetration";
+    if (mapBadgeText) mapBadgeText.textContent = "S1 SAR Active";
     if (mapLegendStrip) {
       mapLegendStrip.innerHTML = `
-        <div class="legend-item"><span class="legend-swatch" style="background:#10B981;"></span> Sowing / Vegetative</div>
-        <div class="legend-item"><span class="legend-swatch" style="background:#059669;"></span> Active Tillering Peak</div>
-        <div class="legend-item"><span class="legend-swatch" style="background:#0284C7;"></span> Heading / Flowering</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#0EA5E9;"></span> High Backscatter (&gt; -12 dB)</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#38BDF8;"></span> Medium (-14 dB to -16 dB)</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#64748B;"></span> Low Backscatter (&lt; -18 dB)</div>
         <div class="legend-item"><span class="legend-swatch" style="background:#D97706; border-radius:50%;"></span> Depot &amp; Dealer Hub</div>
       `;
     }
-  } else if (activePreset === 'box2') {
-    if (mapTitle) mapTitle.textContent = "District Divergence & Deviation Lens";
+  } else if (activeDataSource === 'optical') {
+    if (mapTitle) mapTitle.textContent = `Sentinel-2 Optical NDVI Canopy Vigor (${selectedYear})`;
+    if (mapSub) mapSub.textContent = "10m VNIR/SWIR false-color reflectance · Cloud-masked vegetation index";
+    if (mapBadgeText) mapBadgeText.textContent = "S2 Optical Active";
+    if (mapLegendStrip) {
+      mapLegendStrip.innerHTML = `
+        <div class="legend-item"><span class="legend-swatch" style="background:#059669;"></span> High Vigor (NDVI &gt; 0.75)</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#10B981;"></span> Moderate (NDVI 0.60 – 0.75)</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#F59E0B;"></span> Water Stress (NDVI &lt; 0.50)</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#D97706; border-radius:50%;"></span> Depot &amp; Dealer Hub</div>
+      `;
+    }
+  } else if (activeDataSource === 'weather') {
+    if (mapTitle) mapTitle.textContent = `ERA5 / IMD Gridded Weather & Soil (${selectedYear})`;
+    if (mapSub) mapSub.textContent = "0.05° reanalysis precip departure & 0–7cm soil moisture";
+    if (mapBadgeText) mapBadgeText.textContent = "ERA5 / IMD Active";
+    if (mapLegendStrip) {
+      mapLegendStrip.innerHTML = `
+        <div class="legend-item"><span class="legend-swatch" style="background:#2563EB;"></span> Rainfall Surplus (&gt; +5% LPA)</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#3B82F6;"></span> Normal (±5% LPA)</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#EF4444;"></span> Deficit Inundation (&lt; -10%)</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#D97706; border-radius:50%;"></span> Depot &amp; Dealer Hub</div>
+      `;
+    }
+  } else if (activeDataSource === 'divergence' || activePreset === 'box2') {
+    if (mapTitle) mapTitle.textContent = `District Divergence & Deviation Lens (${selectedYear})`;
     if (mapSub) mapSub.textContent = "Coloured by deviation from own historical baseline (Red = Below, Blue = Above)";
     if (mapBadgeText) mapBadgeText.textContent = "Baseline Divergence Active";
     if (mapLegendStrip) {
@@ -542,8 +907,8 @@ function updateMapLensUI() {
         <div class="legend-item"><span class="legend-swatch" style="background:#D97706; border-radius:50%;"></span> Depot &amp; Dealer Hub</div>
       `;
     }
-  } else if (activePreset === 'box3') {
-    if (mapTitle) mapTitle.textContent = "Composite Stress & Mandi Risk Lens";
+  } else if (activeDataSource === 'agristack' || activePreset === 'box3') {
+    if (mapTitle) mapTitle.textContent = `Composite Stress & Mandi Risk Lens (${selectedYear})`;
     if (mapSub) mapSub.textContent = "Dealers coloured by composite stress rank (Rank 1 to 5), not by yield";
     if (mapBadgeText) mapBadgeText.textContent = "Stress Ranking Active";
     if (mapLegendStrip) {
@@ -555,10 +920,70 @@ function updateMapLensUI() {
         <div class="legend-item"><span class="legend-swatch" style="background:#2563EB;"></span> Rank 5 (Optimal Liquidity)</div>
       `;
     }
+  } else {
+    if (mapTitle) mapTitle.textContent = `Agri-Spatial Map & Sowing Front Lens (${selectedYear})`;
+    if (mapSub) mapSub.textContent = "Coloured by current crop stage · Depots overlaid · Scrubber drives sowing sweep";
+    if (mapBadgeText) mapBadgeText.textContent = "Stage Phenology Active";
+    if (mapLegendStrip) {
+      mapLegendStrip.innerHTML = `
+        <div class="legend-item"><span class="legend-swatch" style="background:#10B981;"></span> Sowing / Vegetative</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#059669;"></span> Active Tillering Peak</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#0284C7;"></span> Heading / Flowering</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#D97706; border-radius:50%;"></span> Depot &amp; Dealer Hub</div>
+      `;
+    }
   }
 
   // Re-render map layer styling
   renderMapLayers();
+}
+
+/**
+ * Switches the active Satellite Data Layer / Sensor Source
+ */
+function switchMapDataSource(sourceKey) {
+  activeDataSource = sourceKey;
+
+  // Update button active classes
+  document.querySelectorAll('.source-layer-btn').forEach(btn => {
+    if (btn.dataset.source === sourceKey) btn.classList.add('active');
+    else btn.classList.remove('active');
+  });
+
+  updateMapLensUI();
+
+  const facilitySelect = document.getElementById('divergence-facility-select');
+  const selectedKey = facilitySelect?.value || 'cauvery_delta';
+  populateCatchmentData(selectedKey);
+}
+
+/**
+ * Switches the active observation year (2021 to 2026)
+ */
+function switchObservationYear(year) {
+  selectedYear = parseInt(year, 10);
+
+  // Update Year Slider UI
+  const slider = document.getElementById('divergence-year-slider');
+  if (slider) slider.value = selectedYear;
+
+  const yearLabel = document.getElementById('year-slider-active-label');
+  if (yearLabel) {
+    if (selectedYear === 2026) yearLabel.textContent = "2026 (Live Kharif)";
+    else if (selectedYear === 2023) yearLabel.textContent = "2023 (El Niño Drought)";
+    else yearLabel.textContent = `${selectedYear} (Historical)`;
+  }
+
+  document.querySelectorAll('.year-mark').forEach(mark => {
+    if (parseInt(mark.dataset.year, 10) === selectedYear) mark.classList.add('active');
+    else mark.classList.remove('active');
+  });
+
+  updateMapLensUI();
+
+  const facilitySelect = document.getElementById('divergence-facility-select');
+  const selectedKey = facilitySelect?.value || 'cauvery_delta';
+  populateCatchmentData(selectedKey);
 }
 
 /**
@@ -630,6 +1055,9 @@ export function initDivergenceLayer() {
   const exportBtn = document.getElementById('btn-export-divergence');
   const syncBtn = document.getElementById('btn-sync-registry');
   const timelineTicks = document.querySelectorAll('#timeline-scrubber-ticks .tick-btn');
+  const yearSlider = document.getElementById('divergence-year-slider');
+  const yearMarks = document.querySelectorAll('.year-mark');
+  const sourceButtons = document.querySelectorAll('.source-layer-btn');
 
   // Initialize Map
   initDivergenceMap();
@@ -641,6 +1069,26 @@ export function initDivergenceLayer() {
   document.getElementById('btn-layer-box1')?.addEventListener('click', () => switchAgriPreset('box1'));
   document.getElementById('btn-layer-box2')?.addEventListener('click', () => switchAgriPreset('box2'));
   document.getElementById('btn-layer-box3')?.addEventListener('click', () => switchAgriPreset('box3'));
+
+  // Source Layer Switcher Buttons
+  sourceButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const src = btn.dataset.source;
+      if (src) switchMapDataSource(src);
+    });
+  });
+
+  // Year Slider input listener
+  yearSlider?.addEventListener('input', (e) => {
+    switchObservationYear(e.target.value);
+  });
+
+  yearMarks.forEach(mark => {
+    mark.addEventListener('click', () => {
+      const y = mark.dataset.year;
+      if (y) switchObservationYear(y);
+    });
+  });
 
   // Facility change listener
   facilitySelect?.addEventListener('change', (e) => {

@@ -3075,6 +3075,290 @@ html, body {
   margin-top: 2px;
 }
 
+/* =========================================================
+   SOURCE LAYER SWITCHER TOOLBAR
+   ========================================================= */
+.divergence-source-layer-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: var(--surface-subtle, #F2EFE9);
+  border-bottom: 1px solid var(--border-color);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.source-bar-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  font-family: var(--mono);
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+}
+
+.source-layer-btn-group {
+  display: flex;
+  gap: 4px;
+}
+
+.source-layer-btn {
+  background: var(--surface, #FFFFFF);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 0.68rem;
+  font-family: var(--font-sans);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.source-layer-btn:hover {
+  background: #FFFFFF;
+  color: var(--text-primary);
+  border-color: var(--ink-2, #374151);
+}
+
+.source-layer-btn.active {
+  background: var(--ink-1, #111827);
+  color: #FFFFFF;
+  border-color: var(--ink-1, #111827);
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================================================
+   PIXEL FOOTPRINT & SOURCE DATES TELEMETRY HUD
+   ========================================================= */
+.pixel-telemetry-hud {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 10px 12px;
+  width: 310px;
+  color: #F8FAFC;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  pointer-events: auto;
+  transition: all 0.25s ease;
+}
+
+.pixel-hud-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.pixel-hud-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+}
+
+.hud-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 6px #10B981;
+  animation: pulse-green 2s infinite;
+}
+
+.hud-year-chip {
+  background: rgba(59, 130, 246, 0.25);
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  color: #60A5FA;
+  font-size: 0.6rem;
+  font-family: var(--mono);
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-left: auto;
+}
+
+.hud-coords {
+  font-size: 0.62rem;
+  font-family: var(--mono);
+  color: #94A3B8;
+}
+
+.pixel-sources-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pixel-source-card {
+  background: rgba(30, 41, 59, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 5px 8px;
+  transition: all 0.15s ease;
+}
+
+.pixel-source-card:hover {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: rgba(96, 165, 250, 0.4);
+}
+
+.pixel-source-card.highlighted {
+  border-color: #38BDF8;
+  background: rgba(14, 116, 144, 0.35);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+}
+
+.pixel-source-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.src-icon-title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.src-icon {
+  font-size: 0.72rem;
+}
+
+.src-name {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #E2E8F0;
+}
+
+.src-date {
+  font-size: 0.62rem;
+  font-family: var(--mono);
+  color: #38BDF8;
+  background: rgba(56, 189, 248, 0.12);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.pixel-source-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.src-val {
+  font-size: 0.74rem;
+  font-weight: 700;
+  font-family: var(--mono);
+  color: #F1F5F9;
+}
+
+.src-sub {
+  font-size: 0.6rem;
+  color: #94A3B8;
+  margin-top: 1px;
+}
+
+/* =========================================================
+   BOTTOM YEAR SLIDER & MULTI-YEAR CONTROLLER
+   ========================================================= */
+.bottom-year-controller {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 240px;
+  padding-right: 1rem;
+  border-right: 1px solid var(--border-color);
+}
+
+.year-slider-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.year-slider-label {
+  font-size: 0.62rem;
+  font-family: var(--mono);
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+}
+
+.year-active-tag {
+  font-size: 0.68rem;
+  font-family: var(--mono);
+  font-weight: 700;
+  color: #1D4ED8;
+  background: #DBEAFE;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+.year-slider-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.custom-year-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 5px;
+  border-radius: 3px;
+  background: #E2E8F0;
+  outline: none;
+  cursor: pointer;
+}
+
+.custom-year-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--ink-1, #111827);
+  border: 2px solid #3B82F6;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform 0.1s ease;
+}
+
+.custom-year-range::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.year-slider-marks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1px;
+}
+
+.year-mark {
+  font-size: 0.58rem;
+  font-family: var(--mono);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.year-mark:hover {
+  color: var(--text-primary);
+}
+
+.year-mark.active {
+  color: #1D4ED8;
+  font-weight: 700;
+}
+
 /* AREA 2: Telemetry Streams */
 .divergence-stream-list {
   display: flex;
