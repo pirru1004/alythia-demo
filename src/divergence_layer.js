@@ -50,11 +50,11 @@ const agroCatchmentData = {
       readinessScore: "94.2%",
       readinessBadge: "Optimal Stocking",
       badgeClass: "badge-success",
-      narrative: "Mettur reservoir canal releases have stabilized Kuruvai/Samba paddy transplantation. Catchment enters peak tillering with 14 days lead time.",
+      narrative: "Mettur reservoir canal releases have stabilized Kuruvai/Samba paddy transplantation. Depot buffer capacity warrants immediate SKU dispatch with 14 days lead time.",
       confidence: "97.6%",
       recList: [
-        "Dispatch SKU batch #TN-CAU-90 to Thanjavur and Tiruvarur railheads within 6 days.",
-        "Target micro-catchments in Grand Anicut canal branch for tillering nutrients.",
+        "Dispatch SKU batch #TN-CAU-90 to Thanjavur and Tiruvarur depots within 6 days.",
+        "Stage vegetative foliar packs across Grand Anicut dealer network to prevent stockouts.",
         "Review 7-day Northeast monsoon onset forecast before final batch transit."
       ]
     },
@@ -79,9 +79,9 @@ const agroCatchmentData = {
       narrative: "Acreage expansion (+8.2% above 5-year baseline) driven by timely water release from Cauvery basin reservoirs and favorable sowing moisture.",
       confidence: "96.8%",
       recList: [
-        "Increase regional demand allocation by +8.2% across delta retail touchpoints.",
-        "Expand crop protection portfolio for blast and leaf folder resistance.",
-        "Ingest distributor channel inventory and settlement terms to raise ceiling."
+        "Increase regional demand allocation by +8.2% across delta dealer touchpoints.",
+        "Expand crop protection SKU allocation for blast and leaf folder resistance.",
+        "Ingest distributor channel inventory and promotional terms to raise explanatory ceiling."
       ]
     },
 
@@ -97,12 +97,12 @@ const agroCatchmentData = {
       creditScore: "Rank 4 / 5",
       creditBadge: "Low Credit Risk",
       badgeClass: "badge-success",
-      narrative: "Assured canal irrigation and high vegetative biomass indices support strong credit solvency across Thanjavur and Nagapattinam dealers.",
+      narrative: "Assured canal irrigation and high vegetative biomass indices support standard 60-day DSO terms across Thanjavur and Nagapattinam dealers.",
       confidence: "97.2%",
       recList: [
         "Authorize standard 60-day commercial terms to accredited Cauvery dealer tier.",
         "Set post-harvest collection reconciliation starting Nov 20.",
-        "Track direct procurement center (DPC) paddy arrival volumes across Tamil Nadu mandis."
+        "Track direct procurement center (DPC) paddy arrival volumes across Tamil Nadu mandis to time cash collections."
       ]
     }
   },
@@ -135,9 +135,9 @@ const agroCatchmentData = {
       narrative: "Tubewell groundwater dependency and delayed canal lift irrigation have condensed vegetative application windows into 6 days.",
       confidence: "94.8%",
       recList: [
-        "Expedite localized heading-stage fungicide shipments to Armoor and Jagtial hubs.",
-        "Alert field teams to unseasonal brown planthopper (BPH) favourability spikes.",
-        "Cross-verify Sriram Sagar Project (SRSP) water level before secondary dispatch."
+        "Expedite heading-stage fungicide SKU shipments to Armoor and Jagtial depots.",
+        "Alert field sales teams: 6 days of lead time remaining before application window closes.",
+        "Cross-verify Sriram Sagar Project (SRSP) reservoir lift hours before secondary dispatch."
       ]
     },
 
@@ -161,9 +161,9 @@ const agroCatchmentData = {
       narrative: "Major crop mix shift: Farmers switched 9% of intended paddy acreage into cotton & red gram due to canal rationing and groundwater power constraints.",
       confidence: "95.1%",
       recList: [
-        "Cut paddy pesticide shipment quotas by -11.6% to avert major distributor deadstock.",
-        "Ramp up cotton bollworm protection and drought foliar bio-stimulants (+6%).",
-        "Ingest dealer credit limits and promotional schedules to recalibrate forecast."
+        "Cut paddy pesticide SKU quotas by -11.6% to avert distributor deadstock and unsold returns.",
+        "Ramp up cotton bollworm SKU allocation and drought foliar bio-stimulants (+6%).",
+        "Ingest dealer credit limits and promotional schedules to recalibrate demand forecast."
       ]
     },
 
@@ -179,11 +179,11 @@ const agroCatchmentData = {
       creditScore: "Rank 2 / 5",
       creditBadge: "Elevated Scrutiny",
       badgeClass: "badge-warning",
-      narrative: "Groundwater drawdown and biomass deficit elevate credit scrutiny across Telangana dealer catchments.",
+      narrative: "Groundwater drawdown and biomass deficit elevate credit scrutiny and DSO default risk across Telangana dealer catchments.",
       confidence: "93.8%",
       recList: [
-        "Place Nizamabad and Karimnagar dealer network on Rank 2 tightened 30-day settlement terms.",
-        "Implement collateralized or advance-payment requirements for secondary orders.",
+        "Place Nizamabad and Karimnagar dealer network on Rank 2 tightened 30-day DSO settlement terms.",
+        "Implement collateralized or advance-payment requirements for secondary SKU orders.",
         "Align debt collection milestones with peak cotton and paddy mandi arrivals in early November."
       ]
     }
@@ -762,6 +762,7 @@ function updateRightColumnAnalytics(data, yearData) {
   const rConfPct = document.getElementById('rcol-conf-pct');
   const rConfFill = document.getElementById('rcol-conf-fill');
   const rRecList = document.getElementById('rcol-rec-list');
+  const rBreakdownTitle = document.getElementById('rcol-breakdown-title');
 
   const var1Name = document.getElementById('rcol-var1-name');
   const var1Val = document.getElementById('rcol-var1-val');
@@ -772,10 +773,12 @@ function updateRightColumnAnalytics(data, yearData) {
   const var4Name = document.getElementById('rcol-var4-name');
   const var4Val = document.getElementById('rcol-var4-val');
 
+  if (rBreakdownTitle) rBreakdownTitle.textContent = "What we're seeing";
+
   if (activePreset === 'box1') {
-    if (rTitle) rTitle.textContent = `Placement Readiness (${selectedYear})`;
-    if (rSub) rSub.textContent = "Optimal SKU stocking window & lead time";
-    if (rMetricLabel) rMetricLabel.textContent = "PLACEMENT READINESS INDEX";
+    if (rTitle) rTitle.textContent = `Dispatch & Stocking Decision (${selectedYear})`;
+    if (rSub) rSub.textContent = "Depot buffer stocking & application window lead time";
+    if (rMetricLabel) rMetricLabel.textContent = "DEPOT READINESS INDEX";
     if (rMetricNumber) rMetricNumber.textContent = data.b1.readinessScore;
     if (rMetricBadge) {
       rMetricBadge.textContent = data.b1.readinessBadge;
@@ -785,22 +788,22 @@ function updateRightColumnAnalytics(data, yearData) {
     if (rConfPct) rConfPct.textContent = data.b1.confidence;
     if (rConfFill) rConfFill.style.width = data.b1.confidence;
 
-    if (var1Name) var1Name.textContent = "Phenology Stage Progress";
+    if (var1Name) var1Name.textContent = "Application Window Progress";
     if (var1Val) var1Val.textContent = data.b1.stage;
-    if (var2Name) var2Name.textContent = "Soil Moisture (0–7cm)";
+    if (var2Name) var2Name.textContent = "Soil Moisture & Canal Flow";
     if (var2Val) var2Val.textContent = yearData.era5Val;
-    if (var3Name) var3Name.textContent = "Application Lead Time";
+    if (var3Name) var3Name.textContent = "Stockout Lead Time Remaining";
     if (var3Val) var3Val.textContent = data.b1.leadTime;
-    if (var4Name) var4Name.textContent = "Catchment Observed Area";
+    if (var4Name) var4Name.textContent = "Catchment Observed Acreage";
     if (var4Val) var4Val.textContent = data.b1.catchmentAcreage;
 
     if (rRecList) {
       rRecList.innerHTML = data.b1.recList.map(item => `<li>${item}</li>`).join('');
     }
   } else if (activePreset === 'box2') {
-    if (rTitle) rTitle.textContent = `Demand Divergence (${selectedYear})`;
-    if (rSub) rSub.textContent = "Deviation from historical multi-year normal";
-    if (rMetricLabel) rMetricLabel.textContent = "NET FORECAST DIVERGENCE";
+    if (rTitle) rTitle.textContent = `Demand Divergence Assessment (${selectedYear})`;
+    if (rSub) rSub.textContent = "District demand shift vs multi-year normal";
+    if (rMetricLabel) rMetricLabel.textContent = "NET DEMAND DIVERGENCE";
     if (rMetricNumber) rMetricNumber.textContent = yearData.delta;
     if (rMetricBadge) {
       rMetricBadge.textContent = yearData.deltaNum < 0 ? 'Deficit Variance' : 'Acreage Expansion';
@@ -810,9 +813,9 @@ function updateRightColumnAnalytics(data, yearData) {
     if (rConfPct) rConfPct.textContent = data.b2.confidence;
     if (rConfFill) rConfFill.style.width = data.b2.confidence;
 
-    if (var1Name) var1Name.textContent = "District Acreage vs Baseline";
+    if (var1Name) var1Name.textContent = "District Demand vs Baseline";
     if (var1Val) var1Val.textContent = yearData.delta;
-    if (var2Name) var2Name.textContent = "Sentinel-2 NDVI Canopy";
+    if (var2Name) var2Name.textContent = "Vegetation Stress Anomaly";
     if (var2Val) var2Val.textContent = yearData.s2Val;
     if (var3Name) var3Name.textContent = "Agronomic Explanatory Ceiling";
     if (var3Val) var3Val.textContent = `${data.b2.ceilingPct} Error Explained`;
@@ -823,9 +826,9 @@ function updateRightColumnAnalytics(data, yearData) {
       rRecList.innerHTML = data.b2.recList.map(item => `<li>${item}</li>`).join('');
     }
   } else if (activePreset === 'box3') {
-    if (rTitle) rTitle.textContent = `Collection & Credit Risk (${selectedYear})`;
-    if (rSub) rSub.textContent = "Composite stress ranking & liquidity timing";
-    if (rMetricLabel) rMetricLabel.textContent = "COMPOSITE STRESS RATING";
+    if (rTitle) rTitle.textContent = `DSO & Collection Risk Score (${selectedYear})`;
+    if (rSub) rSub.textContent = "Dealer stress rank, Mandi liquidity & settlement terms";
+    if (rMetricLabel) rMetricLabel.textContent = "DSO & COLLECTION RISK SCORE";
     if (rMetricNumber) rMetricNumber.textContent = data.b3.creditScore;
     if (rMetricBadge) {
       rMetricBadge.textContent = data.b3.creditBadge;
@@ -839,9 +842,9 @@ function updateRightColumnAnalytics(data, yearData) {
     if (var1Val) var1Val.textContent = `${yearData.deltaNum >= 0 ? '+' : ''}${yearData.deltaNum}% vs Normal`;
     if (var2Name) var2Name.textContent = "Estimated Harvest Window";
     if (var2Val) var2Val.textContent = data.b3.harvestWindow;
-    if (var3Name) var3Name.textContent = "Catchment HHI Concentration";
+    if (var3Name) var3Name.textContent = "Dealer Catchment Concentration";
     if (var3Val) var3Val.textContent = data.b3.cropConcentration;
-    if (var4Name) var4Name.textContent = "Mandi Price Trend (Agmarknet)";
+    if (var4Name) var4Name.textContent = "Mandi Arrival Price (Agmarknet)";
     if (var4Val) var4Val.textContent = yearData.mandiVal;
 
     if (rRecList) {
